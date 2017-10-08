@@ -1,7 +1,7 @@
 #ifndef _PreprocessingSTL_HPP_
 #define _PreprocessingSTL_HPP_
 
-#include "readSTL.hpp"
+#include "ReadSTL.hpp"
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 #include <pcl/features/feature.h>

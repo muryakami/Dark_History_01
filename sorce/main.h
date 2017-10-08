@@ -2,16 +2,25 @@
 #define _MAIN_H_
 
 
-#include "readSTL.hpp"
-#include "preprocessingSTL.hpp"
-#include "pointSearch.hpp"
-#include "readPointCloud.hpp"
-#include "voxel_grid.hpp"
-#include "surface_normals.hpp"
-#include "basicCalculation.hpp"
-#include "least_squares_methods.hpp"
-#include "cal_PCA.hpp"
-#include "interpolation_stl.hpp"
+#include "ReadSTL.hpp"
+#include "PreprocessingSTL.hpp"
+#include "PointSearch.hpp"
+#include "ReadPointCloud.hpp"
+#include "VoxelGrid.hpp"
+#include "SurfaceNormals.hpp"
+#include "NormalDirection.hpp"
+#include "BasicCalculation.hpp"
+#include "LeastSquaresMethods.hpp"
+#include "CalPCA.hpp"
+#include "InterpolationSTL.hpp"
+
+#include "PPF.hpp"
+#include "KeypointNormals.hpp"
+
+#include "FeaturePointExtractionHarris.hpp"
+#include "Detectors.hpp"
+#include "FeatureDescription.hpp"
+#include "CorrespondenceGrouping.hpp"
 
 #include <random>
 #include <queue>
@@ -26,10 +35,7 @@
 
 #include <pcl/features/integral_image_normal.h>
 
-
-ofstream accuracy_file("C:\\Users\\yuki\\Documents\\êiíªïÒçê\\03\\outputfile\\accuracy001.txt");
-ofstream outputfile777("C:\\Users\\yuki\\Documents\\êiíªïÒçê\\03\\outputfile\\result001.txt");
-
+#include "Output.h"
 
 
 #endif // !_MAIN_H_

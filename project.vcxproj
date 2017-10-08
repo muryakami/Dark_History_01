@@ -320,33 +320,43 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\yuki\Documents\Project_07\sorce\main.cpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\basicCalculation.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\cal_PCA.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\gaussianElimination.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\jacobi.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\least_squares_methods.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\main.h" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\MT.h" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\pointSearch.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\preprocessingSTL.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\principal.hpp" />
-    <ClCompile Include="C:\Users\yuki\Documents\Project_07\sorce\random_generator.cpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\random_generator.h" />
-    <ClCompile Include="C:\Users\yuki\Documents\Project_07\sorce\randUnitVector.cpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\randUnitVector.h" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\readPointCloud.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\readSTL.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\run_Jacobi.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\surface_normals.hpp" />
-    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\voxel_grid.hpp" />
-    <ClInclude Include="sorce\interpolation_stl.hpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="C:\Users\yuki\Documents\Project_07\ZERO_CHECK.vcxproj">
       <Project>{90AFA099-94FB-3773-B741-C185335810C0}</Project>
       <Name>ZERO_CHECK</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sorce\BasicCalculation.hpp" />
+    <ClInclude Include="sorce\CalPCA.hpp" />
+    <ClInclude Include="sorce\CorrespondenceGrouping.hpp" />
+    <ClInclude Include="sorce\Detectors.hpp" />
+    <ClInclude Include="sorce\FeatureDescription.hpp" />
+    <ClInclude Include="sorce\FeaturePointExtractionHarris.hpp" />
+    <ClInclude Include="sorce\GaussianElimination.hpp" />
+    <ClInclude Include="sorce\InterpolationSTL.hpp" />
+    <ClInclude Include="sorce\Jacobi.hpp" />
+    <ClInclude Include="sorce\KeypointNormals.hpp" />
+    <ClInclude Include="sorce\LeastSquaresMethods.hpp" />
+    <ClInclude Include="sorce\main.h" />
+    <ClInclude Include="sorce\MT.h" />
+    <ClInclude Include="sorce\NormalDirection.hpp" />
+    <ClInclude Include="sorce\Output.h" />
+    <ClInclude Include="sorce\PointSearch.hpp" />
+    <ClInclude Include="sorce\PPF.hpp" />
+    <ClInclude Include="sorce\PreprocessingSTL.hpp" />
+    <ClInclude Include="sorce\Principal.hpp" />
+    <ClInclude Include="sorce\RandomGenerator.h" />
+    <ClInclude Include="sorce\RandUnitVector.h" />
+    <ClInclude Include="sorce\ReadPointCloud.hpp" />
+    <ClInclude Include="sorce\ReadSTL.hpp" />
+    <ClInclude Include="sorce\RunJacobi.hpp" />
+    <ClInclude Include="sorce\SurfaceNormals.hpp" />
+    <ClInclude Include="sorce\VoxelGrid.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sorce\main.cpp" />
+    <ClCompile Include="sorce\RandomGenerator.cpp" />
+    <ClCompile Include="sorce\RandUnitVector.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

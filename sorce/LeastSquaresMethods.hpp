@@ -1,7 +1,7 @@
 #ifndef _leastSquaresMethods_HPP_
 #define _leastSquaresMethods_HPP_
 
-#include "gaussianElimination.hpp"
+#include "GaussianElimination.hpp"
 #include <array>
 #include <vector>
 #include <pcl/point_types.h>

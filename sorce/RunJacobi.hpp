@@ -1,7 +1,7 @@
 #ifndef _RunJacobi_HPP_
 #define _RunJacobi_HPP_
 
-#include "jacobi.hpp"
+#include "Jacobi.hpp"
 #include <array>
 
 using namespace std;

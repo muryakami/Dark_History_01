@@ -1,9 +1,9 @@
 #ifndef _CalPCA_HPP_
 #define _CalPCA_HPP_
 
-#include "run_Jacobi.hpp"
-#include "principal.hpp"
-#include "basicCalculation.hpp"
+#include "RunJacobi.hpp"
+#include "Principal.hpp"
+#include "BasicCalculation.hpp"
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 

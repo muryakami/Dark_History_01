@@ -1,7 +1,7 @@
 #ifndef _RUV_H_
 #define _RUV_H_
 
-#include "random_generator.h"
+#include "RandomGenerator.h"
 
 #include <amp_math.h>
 //using namespace Concurrency::precise_math;

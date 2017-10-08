@@ -1,4 +1,4 @@
-#include "random_generator.h"
+#include "RandomGenerator.h"
 
 /*class random_generator {
 public:

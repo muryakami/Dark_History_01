@@ -1,10 +1,10 @@
 #ifndef _InterpolationSTL_HPP_
 #define _InterpolationSTL_HPP_
 
-#include "readSTL.hpp"
-#include "basicCalculation.hpp"
+#include "ReadSTL.hpp"
+#include "BasicCalculation.hpp"
 #include "MT.h"
-#include "randUnitVector.h"
+#include "RandUnitVector.h"
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 #include <pcl/filters/voxel_grid.h>
@@ -31,7 +31,7 @@ inline float error() {
 // éOäpå`ÇÃóvëfì‡ï‚ä‘
 pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle(TRIANGLE tri, bool TF) {
 
-	float max_error = sqrt(0.04); // ç≈ëÂåÎç∑
+	float max_error = sqrt(0.36); // ç≈ëÂåÎç∑
 	init_genrand((unsigned)time(NULL));
 	vector3* sampleTest = new vector3;
 	random_generator sampleTime((unsigned)time(NULL));
@@ -88,9 +88,9 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle(TRIANGLE tri, bool TF
 
 				//max_error *= genrand_real1();
 				randUnitVector(sampleTest, sampleTime);
-				//sampleTest->x *= max_error;
-				//sampleTest->y *= max_error;
-				//sampleTest->z *= max_error;
+				sampleTest->x *= max_error;
+				sampleTest->y *= max_error;
+				sampleTest->z *= max_error;
 				p.x += sampleTest->x;
 				p.y += sampleTest->y;
 				p.z += sampleTest->z;

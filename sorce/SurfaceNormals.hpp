@@ -6,7 +6,6 @@
 #include <pcl/common/centroid.h>
 #include <pcl/features/normal_3d.h>
 
-
 pcl::PointCloud<pcl::PointNormal>::Ptr surface_normals(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
 {
 	Eigen::Vector4f xyz_centroid;

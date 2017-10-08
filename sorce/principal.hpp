@@ -1,7 +1,7 @@
 #ifndef _Principal_HPP_
 #define _Principal_HPP_
 
-#include "jacobi.hpp"
+#include "Jacobi.hpp"
 #include <Math.h>
 
 int principal(int p, int n, double **x, double *r, double **a, double eps, int ct)

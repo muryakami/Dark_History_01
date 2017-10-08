@@ -1,4 +1,4 @@
-#include "randUnitVector.h"
+#include "RandUnitVector.h"
 
 void randUnitVector(vector3* pOut, random_generator& Rand) {
 	uint32_t value = Rand();
