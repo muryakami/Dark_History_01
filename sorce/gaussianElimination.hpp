@@ -45,4 +45,4 @@ void solve(float A[N_DIM][N_DIM], float B[N_DIM], int size) {
 			B[j] -= A[j][i] * B[i];
 }
 
-#endif
+#endif // _GaussianElimination_HPP_
