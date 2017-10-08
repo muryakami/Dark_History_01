@@ -11,6 +11,7 @@
 #include "basicCalculation.hpp"
 #include "least_squares_methods.hpp"
 #include "cal_PCA.hpp"
+#include "interpolation_stl.hpp"
 
 #include <random>
 #include <queue>

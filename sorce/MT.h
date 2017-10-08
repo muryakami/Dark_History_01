@@ -51,6 +51,10 @@
 */
 
 
+#ifndef _MT19937_H_
+#define _MT19937_H_
+
+
 /* Period parameters */  
 #define MT_N 624
 #define MT_M 397
@@ -178,3 +182,6 @@ double genrand_res53(void)
     return(a*67108864.0+b)*(1.0/9007199254740992.0); 
 } 
 /* These real versions are due to Isaku Wada, 2002/01/09 added */
+
+
+#endif
