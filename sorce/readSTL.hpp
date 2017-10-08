@@ -155,4 +155,4 @@ vector<TRIANGLE> STLDATA::ReadStl(const string filepath)
 	return _data;
 }
 
-#endif
+#endif // _ReadSTL_HPP_

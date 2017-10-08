@@ -202,4 +202,4 @@ array<array<double, 3>, 2> run_Jacobi2(double Sxx, double Sxy, double Syy) {
 	return result;
 }
 
-#endif
+#endif // _RunJacobi_HPP_

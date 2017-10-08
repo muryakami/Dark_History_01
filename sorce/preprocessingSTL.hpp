@@ -244,4 +244,4 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr stl_pointsXYZ(STLDATA stl) {
 	return cloud_ptr;
 }
 
-#endif
+#endif // _PreprocessingSTL_HPP_

@@ -184,4 +184,4 @@ double genrand_res53(void)
 /* These real versions are due to Isaku Wada, 2002/01/09 added */
 
 
-#endif
+#endif // _MT19937_H_

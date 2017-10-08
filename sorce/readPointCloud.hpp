@@ -42,4 +42,4 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr myifstream_test(string filename) {
 	return cloud_ptr;
 }
 
-#endif
+#endif // _ReadPointCloud_HPP_

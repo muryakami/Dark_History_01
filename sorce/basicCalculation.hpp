@@ -51,4 +51,4 @@ inline double roundN(double src, int n) {
 	return    dst * pow(10, n + 1);       /*ˆ—‚ğs‚Á‚½Œ…‚ğŒ³‚É–ß‚·*/
 }
 
-#endif
+#endif  _BasicCalculation_HPP_

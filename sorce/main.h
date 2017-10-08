@@ -38,4 +38,4 @@
 #include "Output.h"
 
 
-#endif // !_MAIN_H_
+#endif // _MAIN_H_

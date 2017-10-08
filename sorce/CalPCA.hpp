@@ -158,4 +158,4 @@ array<array<double, 2>, 2> cal_PCA2(vector<array<float, 2>> cloud) {
 	return eigenvector;
 }
 
-#endif
+#endif // _CalPCA_HPP_

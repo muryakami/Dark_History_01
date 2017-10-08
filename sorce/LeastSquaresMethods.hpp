@@ -1,5 +1,5 @@
-#ifndef _leastSquaresMethods_HPP_
-#define _leastSquaresMethods_HPP_
+#ifndef _LeastSquaresMethods_HPP_
+#define _LeastSquaresMethods_HPP_
 
 #include "GaussianElimination.hpp"
 #include <array>
@@ -134,4 +134,4 @@ array<float, 3> least_squares_method_cylinder0(pcl::PointCloud<pcl::PointXYZ>::P
 	return coefficients;
 }
 
-#endif
+#endif // _LeastSquaresMethods_HPP_

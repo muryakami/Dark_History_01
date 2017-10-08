@@ -134,4 +134,4 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_stl(string filename, bool TF) 
 	return cloud_ptr;
 }
 
-#endif
+#endif // _InterpolationSTL_HPP_

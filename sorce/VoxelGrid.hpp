@@ -126,4 +126,4 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr voxel_grid0(pcl::PointCloud<pcl::PointXYZ>::
 	return cloud_filtered;
 }
 
-#endif
+#endif // _VoxelGrid_HPP_

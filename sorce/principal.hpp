@@ -75,4 +75,4 @@ int principal(int p, int n, double **x, double *r, double **a, double eps, int c
 	return sw;
 }
 
-#endif
+#endif // _Principal_HPP_

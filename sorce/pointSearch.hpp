@@ -106,4 +106,4 @@ vector<pair<int, float>> nearest_search1(pcl::PointNormal searchPoint, int K, pc
 	return points;
 }
 
-#endif
+#endif //  _PointSearch_HPP_

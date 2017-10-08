@@ -101,4 +101,4 @@ int Jacobi(int n, int ct, double eps, double **A, double **A1, double **A2, doub
 	return ind;
 }
 
-#endif
+#endif // _Jacobi_HPP_

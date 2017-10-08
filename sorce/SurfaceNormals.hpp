@@ -35,4 +35,4 @@ pcl::PointCloud<pcl::PointNormal>::Ptr surface_normals(pcl::PointCloud<pcl::Poin
 	return cloud_normals;
 }
 
-#endif
+#endif // _SurfaceNormals_HPP_
