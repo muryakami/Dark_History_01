@@ -256,8 +256,8 @@ pcl::CorrespondencesPtr myFindMatching_SHOT352_2(pcl::PointCloud<pcl::SHOT352>::
 	accuracy_file << "i: " << correspondences->at(i).index_query << "\tj: " << correspondences->at(i).index_match << "\tdistance: " << correspondences->at(i).distance << endl;
 	}*/
 
-	for (pcl::Correspondence it : *correspondences)
-		outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << it.distance << endl;
+	/*for (pcl::Correspondence it : *correspondences)
+		outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << it.distance << endl;*/
 
 	return correspondences;
 }

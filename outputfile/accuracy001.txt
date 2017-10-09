@@ -1,2 +1,6 @@
-input_cloud: 1206[ms]
+accuracy: 100 [%]
+
+accuracy: 28.4211 [%]
+
+accuracy: 35.7895 [%]
 

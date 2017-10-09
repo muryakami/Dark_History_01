@@ -482,13 +482,13 @@ void CorrespondenceGrouping() {
 	vector<myPPF> stl_PPF = make_lightPPFs(attention_point2);
 	int match_cloud = myLightPPF_matching(keypoint_PPF, stl_PPF);
 
-	outputfile777 << "keypoint_PPF.size(): " << keypoint_PPF.size() << endl;
-	outputfile777 << "stl_PPF.size(): " << stl_PPF.size() << endl;
-	outputfile777 << "match_cloud->size(): " << match_cloud << endl;
-	outputfile777 << "stl_accuracy: " << (float)match_cloud / stl_PPF.size() * 100 << endl;
-	outputfile777 << "keypoint_accuracy: " << (float)match_cloud / keypoint_PPF.size() * 100 << endl;
+	accuracy_file << "keypoint_PPF.size(): " << keypoint_PPF.size() << endl;
+	accuracy_file << "stl_PPF.size(): " << stl_PPF.size() << endl;
+	accuracy_file << "match_cloud->size(): " << match_cloud << endl;
+	accuracy_file << "stl_accuracy: " << (float)match_cloud / stl_PPF.size() * 100 << endl;
+	accuracy_file << "keypoint_accuracy: " << (float)match_cloud / keypoint_PPF.size() * 100 << endl;
 
-	outputfile777 << endl;
+	accuracy_file << endl;
 
 	// Œë‘Î‰žœ‹Ž
 	//pcl::CorrespondencesPtr pCorrespondences = myRefiningMatching2(correspondences, source_keypointsXYZ, target_keypointsXYZ);
@@ -508,13 +508,13 @@ void CorrespondenceGrouping() {
 	vector<myPPF> stl_PPF2 = make_lightPPFs(attention_point4);
 	int match_cloud2 = myLightPPF_matching(keypoint_PPF2, stl_PPF2);
 
-	outputfile777 << "keypoint_PPF.size(): " << keypoint_PPF2.size() << endl;
-	outputfile777 << "stl_PPF.size(): " << stl_PPF2.size() << endl;
-	outputfile777 << "match_cloud->size(): " << match_cloud2 << endl;
-	outputfile777 << "stl_accuracy: " << (float)match_cloud2 / stl_PPF2.size() * 100 << endl;
-	outputfile777 << "keypoint_accuracy: " << (float)match_cloud2 / keypoint_PPF2.size() * 100 << endl;
+	accuracy_file << "keypoint_PPF.size(): " << keypoint_PPF2.size() << endl;
+	accuracy_file << "stl_PPF.size(): " << stl_PPF2.size() << endl;
+	accuracy_file << "match_cloud->size(): " << match_cloud2 << endl;
+	accuracy_file << "stl_accuracy: " << (float)match_cloud2 / stl_PPF2.size() * 100 << endl;
+	accuracy_file << "keypoint_accuracy: " << (float)match_cloud2 / keypoint_PPF2.size() * 100 << endl;
 
-	outputfile777 << endl;
+	accuracy_file << endl;
 
 
 
@@ -530,14 +530,14 @@ void CorrespondenceGrouping() {
 
 
 	for (pcl::Correspondence i : *correspondences) {
-		outputfile777 << "i: " << i.index_query << "\tj: " << i.index_match << "\tdistance: " << i.distance << endl;
+		outputfile << "i: " << i.index_query << "\tj: " << i.index_match << "\tdistance: " << i.distance << endl;
 	}
-	outputfile777 << endl;
+	outputfile << endl;
 
 	for (pcl::Correspondence i : *pCorrespondences) {
-		outputfile777 << "i: " << i.index_query << "\tj: " << i.index_match << "\tdistance: " << i.distance << endl;
+		outputfile << "i: " << i.index_query << "\tj: " << i.index_match << "\tdistance: " << i.distance << endl;
 	}
-	outputfile777 << endl;
+	outputfile << endl;
 }
 
 

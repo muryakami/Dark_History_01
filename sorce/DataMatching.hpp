@@ -17,7 +17,7 @@ using namespace std;
 void data_matching(string path, vector<pair<myPPF, pair<pcl::PointXYZ, pcl::PointXYZ>>> keypoint_PPF) {
 	// 工具データ読み込み
 	/*pcl::PointCloud<pcl::PointNormal>::Ptr stl_cloud = stl_points(path);*/
-	outputfile777 << path << endl;
+	outputfile << path << endl;
 
 	// Neighbors within radius search
 	pcl::search::KdTree<pcl::PointNormal> kdtree;
@@ -36,26 +36,26 @@ void data_matching(string path, vector<pair<myPPF, pair<pcl::PointXYZ, pcl::Poin
 
 	// 工具データのPPF
 	vector<pair<myPPF, pair<pcl::PointXYZ, pcl::PointXYZ>>> stl_PPF = make_PPFs(stl_cloud);
-	outputfile777 << "stl_cloud->size(): " << stl_cloud->size() << endl;
-	outputfile777 << "stl_PPF.size(): " << stl_PPF.size() << endl;
+	outputfile << "stl_cloud->size(): " << stl_cloud->size() << endl;
+	outputfile << "stl_PPF.size(): " << stl_PPF.size() << endl;
 
 	// データマッチング
 	pcl::PointCloud<pair<pair<pcl::PointXYZ, pcl::PointXYZ>, pair<pcl::PointXYZ, pcl::PointXYZ>>>::Ptr match_cloud = myPPF_matching(keypoint_PPF, stl_PPF);
-	outputfile777 << "match_cloud_size: " << match_cloud->size() << endl;
-	outputfile777 << "accuracy: " << (float)match_cloud->size() / stl_PPF.size() * 100 << endl;
+	outputfile << "match_cloud_size: " << match_cloud->size() << endl;
+	outputfile << "accuracy: " << (float)match_cloud->size() / stl_PPF.size() * 100 << endl;
 	//int errata2_size = errata2(match_cloud);
-	//outputfile777 << "errata2_size: " << errata2_size << endl;
-	//outputfile777 << "accuracy2: " << (float)errata2_size / stl_PPF.size() * 100 << endl;
+	//outputfile << "errata2_size: " << errata2_size << endl;
+	//outputfile << "accuracy2: " << (float)errata2_size / stl_PPF.size() * 100 << endl;
 	//int errata3_size = errata3(match_cloud);
-	//outputfile777 << "errata3_size: " << errata3_size << endl;
-	//outputfile777 << "accuracy3: " << (float)errata3_size / stl_PPF.size() * 100 << endl;
-	//outputfile777 << endl;
+	//outputfile << "errata3_size: " << errata3_size << endl;
+	//outputfile << "accuracy3: " << (float)errata3_size / stl_PPF.size() * 100 << endl;
+	//outputfile << endl;
 }
 
 void data_matching2(string path, vector<pair<myPPF, pair<pcl::PointXYZ, pcl::PointXYZ>>> keypoint_PPF) {
 	// 工具データ読み込み
 	//pcl::PointCloud<pcl::PointNormal>::Ptr stl_cloud = stl_points(path);
-	outputfile777 << path << endl;
+	outputfile << path << endl;
 
 	STLDATA stl_object(path);
 	pcl::PointCloud<pcl::PointXYZ> merged_cloud;
@@ -97,25 +97,25 @@ void data_matching2(string path, vector<pair<myPPF, pair<pcl::PointXYZ, pcl::Poi
 
 	// 工具データのPPF
 	vector<pair<myPPF, pair<pcl::PointXYZ, pcl::PointXYZ>>> stl_PPF = make_PPFs(stl_cloud);
-	outputfile777 << "stl_cloud->size(): " << stl_cloud->size() << endl;
-	outputfile777 << "stl_PPF.size(): " << stl_PPF.size() << endl;
+	outputfile << "stl_cloud->size(): " << stl_cloud->size() << endl;
+	outputfile << "stl_PPF.size(): " << stl_PPF.size() << endl;
 
 	// データマッチング
 	pcl::PointCloud<pair<pair<pcl::PointXYZ, pcl::PointXYZ>, pair<pcl::PointXYZ, pcl::PointXYZ>>>::Ptr match_cloud = myPPF_matching(keypoint_PPF, stl_PPF);
-	outputfile777 << "match_cloud_size: " << match_cloud->size() << endl;
-	outputfile777 << "accuracy: " << (float)match_cloud->size() / stl_PPF.size() * 100 << endl;
+	outputfile << "match_cloud_size: " << match_cloud->size() << endl;
+	outputfile << "accuracy: " << (float)match_cloud->size() / stl_PPF.size() * 100 << endl;
 	//int errata2_size = errata2(match_cloud);
-	//outputfile777 << "errata2_size: " << errata2_size << endl;
-	//outputfile777 << "accuracy2: " << (float)errata2_size / stl_PPF.size() * 100 << endl;
+	//outputfile << "errata2_size: " << errata2_size << endl;
+	//outputfile << "accuracy2: " << (float)errata2_size / stl_PPF.size() * 100 << endl;
 	//int errata3_size = errata3(match_cloud);
-	//outputfile777 << "errata3_size: " << errata3_size << endl;
-	//outputfile777 << "accuracy3: " << (float)errata3_size / stl_PPF.size() * 100 << endl;
-	//outputfile777 << endl;
+	//outputfile << "errata3_size: " << errata3_size << endl;
+	//outputfile << "accuracy3: " << (float)errata3_size / stl_PPF.size() * 100 << endl;
+	//outputfile << endl;
 }
 
 vector<pair<myPPF, pair<pcl::PointXYZ, pcl::PointXYZ>>> make_stl_PPFs(string path) {
 	// 工具データ読み込み
-	outputfile777 << path << endl;
+	outputfile << path << endl;
 
 	// STLデータの内挿補間
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in = interpolation_stl(path, false);
@@ -143,7 +143,7 @@ void data_matchingL(string filename, vector<myPPF> target_PPF) {
 	//vector<myPPF> data_matchingL(string filename, vector<myPPF> target_PPF) {
 
 	// 工具データ情報
-	outputfile777 << filename << endl;
+	outputfile << filename << endl;
 
 	// STLデータの内挿補間
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in = interpolation_stl(filename, false);
@@ -165,10 +165,10 @@ void data_matchingL(string filename, vector<myPPF> target_PPF) {
 	// データマッチング (簡易版)
 	int match_cloud = myLightPPF_matching(target_PPF, source_PPF);
 
-	outputfile777 << "match_cloud->size: " << match_cloud << endl;
-	outputfile777 << "accuracy: " << (float)match_cloud / source_PPF.size() * 100 << endl;
+	outputfile << "match_cloud->size: " << match_cloud << endl;
+	outputfile << "accuracy: " << (float)match_cloud / source_PPF.size() * 100 << endl;
 
-	outputfile777 << endl;
+	outputfile << endl;
 
 	//return source_PPF; //
 }

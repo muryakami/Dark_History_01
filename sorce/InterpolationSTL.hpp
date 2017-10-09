@@ -18,10 +18,10 @@ inline float error() {
 // OŠpŒ`‚Ì—v‘f“à•âŠÔ
 pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle(TRIANGLE tri, bool TF) {
 
-	float max_error = sqrt(0.36); // Å‘åŒë·
-	init_genrand((unsigned)time(NULL));
-	vector3* sampleTest = new vector3;
-	random_generator sampleTime((unsigned)time(NULL));
+	//float max_error = sqrt(0.36); // Å‘åŒë·
+	//init_genrand((unsigned)time(NULL));
+	//vector3* sampleTest = new vector3;
+	//random_generator sampleTime((unsigned)time(NULL));
 
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
 
@@ -69,18 +69,18 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle(TRIANGLE tri, bool TF
 			p.y = A.y + up*(eu.y / eu_norm) + vp*(ev.y / ev_norm);
 			p.z = A.z + up*(eu.z / eu_norm) + vp*(ev.z / ev_norm);
 			if (TF) {
-				//p.x += error();
-				//p.y += error();
-				//p.z += error();
+				p.x += error();
+				p.y += error();
+				p.z += error();
 
 				//max_error *= genrand_real1();
-				randUnitVector(sampleTest, sampleTime);
-				sampleTest->x *= max_error;
-				sampleTest->y *= max_error;
-				sampleTest->z *= max_error;
-				p.x += sampleTest->x;
-				p.y += sampleTest->y;
-				p.z += sampleTest->z;
+				//randUnitVector(sampleTest, sampleTime);
+				//sampleTest->x *= max_error;
+				//sampleTest->y *= max_error;
+				//sampleTest->z *= max_error;
+				//p.x += sampleTest->x;
+				//p.y += sampleTest->y;
+				//p.z += sampleTest->z;
 			}
 
 			//if (p.z < 100) continue; //

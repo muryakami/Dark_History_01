@@ -124,4 +124,53 @@ vector<pair<int, float>> nearest_search1(pcl::PointNormal searchPoint, int K, pc
 	return points;
 }
 
+// 対応点探索 (異なる点群から最も近い点を取り出す)
+std::vector<int> nearest_search_test1(pcl::PointCloud<pcl::PointXYZ>::Ptr source_keypointsXYZ, pcl::PointCloud<pcl::PointXYZ>::Ptr target_keypointsXYZ) {
+
+	std::vector<int> correspondences;
+	correspondences.resize(1);
+
+	pcl::KdTreeFLANN<pcl::PointXYZ> search_tree;
+	search_tree.setInputCloud(target_keypointsXYZ);
+
+	std::vector<int> index(1);
+	std::vector<float> L2_distance(1);
+
+	for (int i = 0; i < source_keypointsXYZ->size(); i++) {
+		search_tree.nearestKSearch(*source_keypointsXYZ, i, 1, index, L2_distance);
+		correspondences[i] = index[0];
+	}
+
+	/*for (pcl::Correspondence it : *correspondences)
+		outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << it.distance << endl;*/
+
+	return correspondences;
+}
+
+// 対応点探索
+pcl::CorrespondencesPtr nearest_search_test2(pcl::PointCloud<pcl::PointXYZ>::Ptr source_keypointsXYZ, pcl::PointCloud<pcl::PointXYZ>::Ptr target_keypointsXYZ) {
+
+	int K = 1;
+
+	pcl::CorrespondencesPtr correspondences(new pcl::Correspondences);
+	correspondences->reserve(source_keypointsXYZ->size()*K);
+
+	pcl::KdTreeFLANN<pcl::PointXYZ> search_tree;
+	search_tree.setInputCloud(target_keypointsXYZ);
+
+	std::vector<int> index(K);
+	std::vector<float> L2_distance(K);
+	for (int i = 0; i < source_keypointsXYZ->size(); i++) {
+		if (search_tree.nearestKSearch(*source_keypointsXYZ, i, K, index, L2_distance) > 0) {
+			for (int j = 0; j < K; j++)
+				correspondences->push_back(pcl::Correspondence(i, index[j], L2_distance[j]));
+		}
+	}
+
+	/*for (pcl::Correspondence it : *correspondences)
+	outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << it.distance << endl;*/
+
+	return correspondences;
+}
+
 #endif // _PointSearch_HPP_
