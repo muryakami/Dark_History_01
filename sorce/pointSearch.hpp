@@ -1,12 +1,30 @@
 #ifndef _PointSearch_HPP_
 #define _PointSearch_HPP_
 
+#include "BasicCalculation.hpp"
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 #include <pcl/features/feature.h>
 #include <vector>
 
 using namespace std;
+
+
+pcl::PointCloud<pcl::PointXYZ>::Ptr neighborhood_cal(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointXYZ attention_point) {
+	pcl::PointCloud<pcl::PointXYZ>::Ptr neighborhood(new pcl::PointCloud<pcl::PointXYZ>()); //近傍点配列
+
+	float r = 7.0f; //半径r 5.0f
+	pcl::PointXYZ tmp;
+	for (pcl::PointCloud<pcl::PointXYZ>::iterator i = cloud->begin(); i != cloud->end(); i++) { //全体の点群を1点づつ抽出
+		tmp = pcl::PointXYZ((*i).x, (*i).y, (*i).z);
+		float judge = euclidean_distance(tmp, attention_point); //normを計算
+		if (judge < r*r) { //半径rよりも近かったら近傍点配列に追加
+			neighborhood->push_back(tmp);
+			continue;
+		}
+	}
+	return neighborhood;
+}
 
 pcl::PointCloud<pcl::PointNormal>::Ptr radius_search(pcl::PointNormal searchPoint, float radius, pcl::PointCloud<pcl::PointNormal>::Ptr cloud_in) {
 

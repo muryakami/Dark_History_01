@@ -13,14 +13,16 @@
 #include "LeastSquaresMethods.hpp"
 #include "CalPCA.hpp"
 #include "InterpolationSTL.hpp"
-
+#include "RemoveOutliers.hpp"
+#include "RANSAC.hpp"
 #include "PPF.hpp"
 #include "KeypointNormals.hpp"
-
+#include "FeaturePointExtraction36.hpp"
 #include "FeaturePointExtractionHarris.hpp"
 #include "Detectors.hpp"
 #include "FeatureDescription.hpp"
 #include "CorrespondenceGrouping.hpp"
+#include "DataMatching.hpp"
 
 #include <random>
 #include <queue>

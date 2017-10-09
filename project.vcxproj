@@ -329,8 +329,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="sorce\BasicCalculation.hpp" />
     <ClInclude Include="sorce\CalPCA.hpp" />
     <ClInclude Include="sorce\CorrespondenceGrouping.hpp" />
+    <ClInclude Include="sorce\DataMatching.hpp" />
     <ClInclude Include="sorce\Detectors.hpp" />
+    <ClInclude Include="sorce\Errata.hpp" />
     <ClInclude Include="sorce\FeatureDescription.hpp" />
+    <ClInclude Include="sorce\FeaturePointExtraction36.hpp" />
     <ClInclude Include="sorce\FeaturePointExtractionHarris.hpp" />
     <ClInclude Include="sorce\GaussianElimination.hpp" />
     <ClInclude Include="sorce\InterpolationSTL.hpp" />
@@ -343,12 +346,15 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="sorce\Output.h" />
     <ClInclude Include="sorce\PointSearch.hpp" />
     <ClInclude Include="sorce\PPF.hpp" />
+    <ClInclude Include="sorce\PPFio.hpp" />
     <ClInclude Include="sorce\PreprocessingSTL.hpp" />
     <ClInclude Include="sorce\Principal.hpp" />
     <ClInclude Include="sorce\RandomGenerator.h" />
     <ClInclude Include="sorce\RandUnitVector.h" />
+    <ClInclude Include="sorce\RANSAC.hpp" />
     <ClInclude Include="sorce\ReadPointCloud.hpp" />
     <ClInclude Include="sorce\ReadSTL.hpp" />
+    <ClInclude Include="sorce\RemoveOutliers.hpp" />
     <ClInclude Include="sorce\RunJacobi.hpp" />
     <ClInclude Include="sorce\SurfaceNormals.hpp" />
     <ClInclude Include="sorce\VoxelGrid.hpp" />

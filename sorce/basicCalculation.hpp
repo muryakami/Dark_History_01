@@ -51,4 +51,18 @@ inline double roundN(double src, int n) {
 	return    dst * pow(10, n + 1);       /*ˆ—‚ğs‚Á‚½Œ…‚ğŒ³‚É–ß‚·*/
 }
 
+inline int round10(float num) {
+	num /= 10;
+	num = round(num);
+	num *= 10;
+	return (int)num;
+}
+
+inline float round01(float num) {
+	num *= 10;
+	num = round(num);
+	num /= 10;
+	return num;
+}
+
 #endif  _BasicCalculation_HPP_

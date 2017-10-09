@@ -9,21 +9,6 @@
 
 using namespace std;
 
-int round10(float num) {
-	num /= 10;
-	num = round(num);
-	num *= 10;
-	return (int)num;
-}
-
-float round01(float num) {
-	num *= 10;
-	num = round(num);
-	num /= 10;
-	return num;
-}
-
-
 typedef struct _myPPF {			// PPF(point pair feature)
 	double distance;				// ‹——£ int
 	double angle_between;			// m1‚Æm2‚ª‚È‚·Šp int
@@ -229,7 +214,6 @@ vector<pair<myPPF, pair<pcl::PointXYZ, pcl::PointXYZ>>> make_PPFs2(pcl::PointClo
 	}
 	return PPFs;
 }
-
 
 pcl::PointCloud<pair<pair<pcl::PointXYZ, pcl::PointXYZ>, pair<pcl::PointXYZ, pcl::PointXYZ>>>::Ptr myPPF_matching(vector<pair<myPPF, pair<pcl::PointXYZ, pcl::PointXYZ>>> keypoint_PPF, vector<pair<myPPF, pair<pcl::PointXYZ, pcl::PointXYZ>>> stl_PPF) {
 

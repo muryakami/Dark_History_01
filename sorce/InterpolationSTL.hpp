@@ -15,19 +15,6 @@ inline float error() {
 	//return (rand() % 21 - 10)*0.01 * 0;
 }
 
-/*inline vector3* ramdVector() {
-	float error = sqrt(0.04);
-	init_genrand((unsigned)time(NULL));
-	error *= genrand_real1();
-	vector3* sampleTest = new vector3;
-	random_generator sampleTime((unsigned)time(NULL));
-	randUnitVector(sampleTest, sampleTime);
-	sampleTest->x *= error;
-	sampleTest->y *= error;
-	sampleTest->z *= error;
-	return sampleTest;
-}*/
-
 // ŽOŠpŒ`‚Ì—v‘f“à•âŠÔ
 pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle(TRIANGLE tri, bool TF) {
 
@@ -132,6 +119,22 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_stl(string filename, bool TF) 
 	sor.filter(*cloud_ptr);
 
 	return cloud_ptr;
+}
+
+pcl::PointCloud<pcl::PointNormal>::Ptr make_occlusion(pcl::PointCloud<pcl::PointNormal>::Ptr cloud)
+{
+	pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f);//Ž‹“_‚ÌŒˆ’è
+
+	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals(new pcl::PointCloud<pcl::PointNormal>);
+	for (pcl::PointCloud<pcl::PointNormal>::iterator it = cloud->begin(); it != cloud->end(); it++) {
+		pcl::PointXYZ n(it->normal_x, it->normal_y, it->normal_z);
+		pcl::PointXYZ vppi(view_point.x - it->x, view_point.y - it->y, view_point.z - it->z);
+		if (dot_product3_cal(n, vppi) < 0) continue; // ³‚µ‚¢
+		//if (dot_product3_cal(n, vppi) > 0) continue; // Œë‚è
+		cloud_normals->push_back(*it);
+	}
+
+	return cloud_normals;
 }
 
 #endif // _InterpolationSTL_HPP_

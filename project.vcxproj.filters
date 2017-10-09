@@ -90,6 +90,24 @@
     <ClInclude Include="sorce\KeypointNormals.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sorce\PPFio.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Errata.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\FeaturePointExtraction36.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\DataMatching.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\RemoveOutliers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\RANSAC.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sorce\main.cpp">

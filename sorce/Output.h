@@ -4,9 +4,9 @@
 #include <fstream>
 using namespace std;
 
-ofstream accuracy_file("C:\\Users\\yuki\\Documents\\êiíªïÒçê\\03\\outputfile\\accuracy001.txt");
-ofstream outputfile777("C:\\Users\\yuki\\Documents\\êiíªïÒçê\\03\\outputfile\\result001.txt");
+ofstream accuracy_file(".\\outputfile\\accuracy001.txt");
+ofstream outputfile777(".\\outputfile\\result001.txt");
 
-ofstream outputfile("C:\\Users\\yuki\\Documents\\êiíªïÒçê\\02\\outputfile\\test001.txt");
+ofstream outputfile(".\\outputfile\\test001.txt");
 
 #endif // _OUTPUT_H_
