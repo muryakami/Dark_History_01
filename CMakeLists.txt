@@ -8,25 +8,40 @@ project( solution )
 
 add_executable( project
  sorce/main.cpp
- sorce/basicCalculation.hpp
- sorce/cal_PCA.hpp
- sorce/gaussianElimination.hpp
- sorce/jacobi.hpp
- sorce/least_squares_methods.hpp
  sorce/main.h
+ sorce/BasicCalculation.hpp
+ sorce/CalPCA.hpp
+ sorce/CorrespondenceGrouping.hpp
+ sorce/DataMatching.hpp
+ sorce/Detectors.hpp
+ sorce/Errata.hpp
+ sorce/FeatureDescription.hpp
+ sorce/FeaturePointExtraction36.hpp
+ sorce/FeaturePointExtractionHarris.hpp
+ sorce/GaussianElimination.hpp
+ sorce/InterpolationSTL.hpp
+ sorce/Jacobi.hpp
+ sorce/KeypointNormals.hpp
+ sorce/LeastSquaresMethods.hpp
  sorce/MT.h
- sorce/pointSearch.hpp
- sorce/preprocessingSTL.hpp
- sorce/principal.hpp
- sorce/random_generator.cpp
- sorce/random_generator.h
- sorce/randUnitVector.cpp
- sorce/randUnitVector.h
- sorce/readPointCloud.hpp
- sorce/readSTL.hpp
- sorce/run_Jacobi.hpp
- sorce/surface_normals.hpp
- sorce/voxel_grid.hpp)
+ sorce/NormalDirection.hpp
+ sorce/Output.h
+ sorce/PointSearch.hpp
+ sorce/PPF.hpp
+ sorce/PPFio.hpp
+ sorce/PreprocessingSTL.hpp
+ sorce/Principal.hpp
+ sorce/RandomGenerator.cpp
+ sorce/RandomGenerator.h
+ sorce/RandUnitVector.cpp
+ sorce/RandUnitVector.h
+ sorce/RANSAC.hpp
+ sorce/ReadPointCloud.hpp
+ sorce/ReadSTL.hpp
+ sorce/RemoveOutliers.hpp
+ sorce/RunJacobi.hpp
+ sorce/SurfaceNormals.hpp
+ sorce/VoxelGrid.hpp)
 
 
 
