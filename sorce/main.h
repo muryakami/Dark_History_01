@@ -40,4 +40,6 @@
 #include "Output.h"
 
 
+#include "ForFixPoint.hpp"
+
 #endif // _MAIN_H_

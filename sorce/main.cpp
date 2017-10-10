@@ -201,7 +201,6 @@ return cloud_normals;
 
 
 
-
 #include <pcl/features/principal_curvatures.h>
 // --------------
 // -----Main-----
@@ -1403,125 +1402,39 @@ int main(int argc, char* argv[]) {
 
 
 
+
+	// フィックスポイント用
+
 	// 工具データ読み込み
 	const string filename = ".\\STL files\\NikonTurningTool.STL";
 	const string filename2 = ".\\STL files\\NikonTurningTool.STL";
 	const string filename3 = ".\\STL files\\CuttingTool_Alternative0.STL";
 	const string filename4 = ".\\STL files\\CuttingTool_Alternative5.STL";
-
-
-	// STLデータの内挿補間
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in = interpolation_stl(filename, false);
-	// 点群の格子化（ダウンサンプリング）
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice(new pcl::PointCloud<pcl::PointXYZ>);
-	pcl::VoxelGrid<pcl::PointXYZ> sor;
-	sor.setInputCloud(cloud_in);
-	sor.setLeafSize(0.5f, 0.5f, 0.5f);
-	sor.filter(*cloud_lattice);
-	// 法線の生成
-	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals = surface_normals(cloud_lattice);
-	// 特徴点検出
-	pcl::PointCloud<pcl::PointXYZ>::Ptr source_keypointsXYZ = myFeaturePointExtraction_HarrisN3(cloud_lattice);
-
-
-	// STLデータの内挿補間
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in2 = interpolation_stl(filename2, false); // trueでノイズ true
-	// 点群の格子化（ダウンサンプリング）
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2(new pcl::PointCloud<pcl::PointXYZ>);
-	pcl::VoxelGrid<pcl::PointXYZ> sor2;
-	sor2.setInputCloud(cloud_in2);
-	sor2.setLeafSize(0.5f, 0.5f, 0.5f);
-	sor2.filter(*cloud_lattice2);
-	// 法線の生成
-	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals2 = surface_normals(cloud_lattice2);
-	// 特徴点検出
-	std::chrono::system_clock::time_point  start, end; // 型は auto で可
-	double elapsed;
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	pcl::PointCloud<pcl::PointXYZ>::Ptr target_keypointsXYZ = myFeaturePointExtraction_HarrisN3(cloud_lattice2);
-	end = std::chrono::system_clock::now();  // 計測終了時間
-	elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); //処理に要した時間をミリ秒に変換
-	processing_time << "input_cloud: " << elapsed << "[ms]" << endl;
-	processing_time << endl;
-
-
-	// 特徴点の法線生成
-	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myKeypoint_normals(cloud_lattice, source_keypointsXYZ);
-	vector<myPPF> keypoint_PPF = make_lightPPFs(attention_point);
-	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point2 = myKeypoint_normals(cloud_lattice2, target_keypointsXYZ);
-	vector<myPPF> stl_PPF = make_lightPPFs(attention_point2);
-	int match_cloud = myLightPPF_matching(keypoint_PPF, stl_PPF);
-
 	
-	// 一致率
-	accuracy_file << "accuracy: " << (float)match_cloud / stl_PPF.size() * 100 << " [%]" << endl;
-	accuracy_file << endl;
+	// PPFの生成
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point(new pcl::PointCloud<pcl::PointNormal>);
+	vector<myPPF> source_PPF = forFixPoint(filename, cloud_lattice, attention_point);
 
+	// PPFの生成
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point2(new pcl::PointCloud<pcl::PointNormal>);
+	vector<myPPF> target_PPF2 = forFixPoint(filename2, cloud_lattice2, attention_point2);
 
-
-	// STLデータの内挿補間
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in3 = interpolation_stl(filename3, false); // trueでノイズ true
-	// 点群の格子化（ダウンサンプリング）
+	// PPFの生成
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice3(new pcl::PointCloud<pcl::PointXYZ>);
-	sor2.setInputCloud(cloud_in3);
-	sor2.setLeafSize(0.5f, 0.5f, 0.5f);
-	sor2.filter(*cloud_lattice3);
-	// 法線の生成
-	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals3 = surface_normals(cloud_lattice3);
-	// 特徴点検出
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	target_keypointsXYZ = myFeaturePointExtraction_HarrisN3(cloud_lattice3);
-	end = std::chrono::system_clock::now();  // 計測終了時間
-	elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); //処理に要した時間をミリ秒に変換
-	processing_time << "input_cloud: " << elapsed << "[ms]" << endl;
-	processing_time << endl;
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point3(new pcl::PointCloud<pcl::PointNormal>);
+	vector<myPPF> target_PPF3 = forFixPoint(filename3, cloud_lattice3, attention_point3);
 
-
-	// 特徴点の法線生成
-	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point3 = myKeypoint_normals(cloud_lattice3, target_keypointsXYZ);
-	stl_PPF = make_lightPPFs(attention_point3);
-	match_cloud = myLightPPF_matching(keypoint_PPF, stl_PPF);
-
-	// 一致率
-	accuracy_file << "accuracy: " << (float)match_cloud / stl_PPF.size() * 100 << " [%]" << endl;
-	accuracy_file << endl;
-
-
-
-	// STLデータの内挿補間
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in4 = interpolation_stl(filename4, false); // trueでノイズ true
-	// 点群の格子化（ダウンサンプリング）
+	// PPFの生成
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice4(new pcl::PointCloud<pcl::PointXYZ>);
-	sor2.setInputCloud(cloud_in4);
-	sor2.setLeafSize(0.5f, 0.5f, 0.5f);
-	sor2.filter(*cloud_lattice4);
-	// 法線の生成
-	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals4 = surface_normals(cloud_lattice4);
-	// 特徴点検出
-	start = std::chrono::system_clock::now(); // 計測開始時間
-	target_keypointsXYZ = myFeaturePointExtraction_HarrisN3(cloud_lattice4);
-	end = std::chrono::system_clock::now();  // 計測終了時間
-	elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); //処理に要した時間をミリ秒に変換
-	processing_time << "input_cloud: " << elapsed << "[ms]" << endl;
-	processing_time << endl;
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point4(new pcl::PointCloud<pcl::PointNormal>);
+	vector<myPPF> target_PPF4 = forFixPoint(filename4, cloud_lattice4, attention_point4);
 
-
-	// 特徴点の法線生成
-	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point4 = myKeypoint_normals(cloud_lattice4, target_keypointsXYZ);
-	stl_PPF = make_lightPPFs(attention_point4);
-	match_cloud = myLightPPF_matching(keypoint_PPF, stl_PPF);
-
-	// 一致率
-	accuracy_file << "accuracy: " << (float)match_cloud / stl_PPF.size() * 100 << " [%]" << endl;
-	accuracy_file << endl;
-
-
-
-
-
-
-
-
+	// 一致率の出力
+	outputAccuracy(&source_PPF, &target_PPF2);
+	outputAccuracy(&source_PPF, &target_PPF3);
+	outputAccuracy(&source_PPF, &target_PPF4);
 
 
 

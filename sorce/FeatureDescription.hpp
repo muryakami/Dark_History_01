@@ -21,7 +21,7 @@ pcl::PointCloud<pcl::FPFHSignature33>::Ptr myFeatureDescription_FPFH2(pcl::Point
 	pcl::PointCloud<pcl::FPFHSignature33>::Ptr features(new pcl::PointCloud<pcl::FPFHSignature33>());
 
 	float radius = 0.3f;// 3.0f
-						// descriptor
+	// descriptor
 	std::cout << "description" << std::endl;
 	pcl::Feature<pcl::PointXYZ, pcl::FPFHSignature33>::Ptr descriptor(new pcl::FPFHEstimationOMP<pcl::PointXYZ, pcl::Normal, pcl::FPFHSignature33>());
 	descriptor->setSearchMethod(pcl::search::Search<pcl::PointXYZ>::Ptr(new pcl::search::KdTree<pcl::PointXYZ>));
