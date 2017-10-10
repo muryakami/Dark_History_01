@@ -7,8 +7,6 @@
 #include "FeaturePointExtractionHarris.hpp"
 #include "PPF.hpp"
 #include "KeypointNormals.hpp"
-//#include <pcl/features/feature.h>
-//#include <pcl/filters/voxel_grid.h>
 #include <chrono>
 
 vector<myPPF> forFixPoint(string filename, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice, pcl::PointCloud<pcl::PointNormal>::Ptr attention_point) {

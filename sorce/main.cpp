@@ -1411,30 +1411,30 @@ int main(int argc, char* argv[]) {
 	const string filename3 = ".\\STL files\\CuttingTool_Alternative0.STL";
 	const string filename4 = ".\\STL files\\CuttingTool_Alternative5.STL";
 	
-	// PPFの生成
+	// PPFの生成(STLデータ:A)	ソース
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point(new pcl::PointCloud<pcl::PointNormal>);
 	vector<myPPF> source_PPF = forFixPoint(filename, cloud_lattice, attention_point);
 
-	// PPFの生成
+	// PPFの生成(STLデータ:A)	ターゲット
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point2(new pcl::PointCloud<pcl::PointNormal>);
 	vector<myPPF> target_PPF2 = forFixPoint(filename2, cloud_lattice2, attention_point2);
 
-	// PPFの生成
+	// PPFの生成(STLデータ:B)	ターゲット
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice3(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point3(new pcl::PointCloud<pcl::PointNormal>);
 	vector<myPPF> target_PPF3 = forFixPoint(filename3, cloud_lattice3, attention_point3);
 
-	// PPFの生成
+	// PPFの生成(STLデータ:C)	ターゲット
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice4(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point4(new pcl::PointCloud<pcl::PointNormal>);
 	vector<myPPF> target_PPF4 = forFixPoint(filename4, cloud_lattice4, attention_point4);
 
 	// 一致率の出力
-	outputAccuracy(&source_PPF, &target_PPF2);
-	outputAccuracy(&source_PPF, &target_PPF3);
-	outputAccuracy(&source_PPF, &target_PPF4);
+	outputAccuracy(&source_PPF, &target_PPF2);	// AとA
+	outputAccuracy(&source_PPF, &target_PPF3);	// AとB
+	outputAccuracy(&source_PPF, &target_PPF4);	// AとC
 
 
 
