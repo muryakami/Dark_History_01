@@ -15,10 +15,16 @@
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\AddingNoise.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\BasicCalculation.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\CalPCA.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\CalSphereVolume.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\CorrespondenceGrouping.hpp">
@@ -40,6 +46,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\FeaturePointExtractionHarris.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\ForFixPoint.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\GaussianElimination.hpp">
@@ -64,6 +73,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\Output.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\PCLViewer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\PointSearch.hpp">
@@ -102,13 +114,19 @@
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\RunJacobi.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\Simulation20171030.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\Simulation20171113.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\SurfaceNormals.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\VoxelGrid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sorce\ForFixPoint.hpp">
+    <ClInclude Include="sorce\Simulation20171127.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

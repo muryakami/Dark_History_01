@@ -9,8 +9,10 @@ project( solution )
 add_executable( project
  sorce/main.cpp
  sorce/main.h
+ sorce/AddingNoise.hpp
  sorce/BasicCalculation.hpp
  sorce/CalPCA.hpp
+ sorce/CalSphereVolume.hpp
  sorce/CorrespondenceGrouping.hpp
  sorce/DataMatching.hpp
  sorce/Detectors.hpp
@@ -18,6 +20,7 @@ add_executable( project
  sorce/FeatureDescription.hpp
  sorce/FeaturePointExtraction36.hpp
  sorce/FeaturePointExtractionHarris.hpp
+ sorce/ForFixPoint.hpp
  sorce/GaussianElimination.hpp
  sorce/InterpolationSTL.hpp
  sorce/Jacobi.hpp
@@ -26,6 +29,7 @@ add_executable( project
  sorce/MT.h
  sorce/NormalDirection.hpp
  sorce/Output.h
+ sorce/PCLViewer.hpp
  sorce/PointSearch.hpp
  sorce/PPF.hpp
  sorce/PPFio.hpp
@@ -40,6 +44,8 @@ add_executable( project
  sorce/ReadSTL.hpp
  sorce/RemoveOutliers.hpp
  sorce/RunJacobi.hpp
+ sorce/Simulation20171030.hpp
+ sorce/Simulation20171113.hpp
  sorce/SurfaceNormals.hpp
  sorce/VoxelGrid.hpp)
 

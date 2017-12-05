@@ -1,8 +1,4 @@
-input_cloud: 222[ms]
+input_cloud: 237[ms]
 
-input_cloud: 231[ms]
-
-input_cloud: 135[ms]
-
-input_cloud: 235[ms]
+input_cloud: 403[ms]
 

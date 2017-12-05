@@ -201,7 +201,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr myFeaturePointExtraction_HarrisN2(pcl::Point
 
 	float radius = 3.0f; // 3.0f 5.0f 7.0f
 
-						 // 特徴点検出
+	// 特徴点検出
 	std::cout << "detection" << std::endl;
 	pcl::HarrisKeypoint3D<pcl::PointNormal, pcl::PointXYZI>::Ptr detector(new pcl::HarrisKeypoint3D<pcl::PointNormal, pcl::PointXYZI>());
 	detector->setNonMaxSupression(true);
@@ -230,7 +230,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr myFeaturePointExtraction_HarrisN3(pcl::Point
 
 	// パラメータ
 	float radius = 3.0f; // 3.0f 5.0f 7.0f 0.3f
-	float threshold = 1e-6; // 0.005f(旋削工具) 1e-6(回転工具)
+	float threshold = 1e-12; // 0.005f(旋削工具) 1e-6(回転工具)
 
 	// 特徴点検出
 	std::cout << "detection" << std::endl;
@@ -256,7 +256,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr myFeaturePointExtraction_HarrisN3(pcl::Point
 
 	// 点の数
 	std::sort(keypoints->begin(), keypoints->end(), compare_intensity); // 比較関数を指定してソート
-	int numThreshold = 20; //15 20
+	int numThreshold = 50; //15 20
 	int count = 0;
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
 	for (pcl::PointCloud<pcl::PointXYZI>::iterator it = keypoints->begin(); it != keypoints->end(); it++) {

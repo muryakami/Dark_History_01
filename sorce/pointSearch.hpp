@@ -1,6 +1,7 @@
 #ifndef _PointSearch_HPP_
 #define _PointSearch_HPP_
 
+#include "Output.h"
 #include "BasicCalculation.hpp"
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
@@ -167,10 +168,103 @@ pcl::CorrespondencesPtr nearest_search_test2(pcl::PointCloud<pcl::PointXYZ>::Ptr
 		}
 	}
 
-	/*for (pcl::Correspondence it : *correspondences)
-	outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << it.distance << endl;*/
+	for (pcl::Correspondence it : *correspondences)
+	outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << it.distance << endl;
 
 	return correspondences;
+}
+
+// ‘Î‰ž“_’Tõ
+pcl::CorrespondencesPtr nearest_search_test3(pcl::PointCloud<pcl::PointNormal>::Ptr source_keypoints, pcl::PointCloud<pcl::PointNormal>::Ptr target_keypoints) {
+
+	int K = 1;
+
+	pcl::CorrespondencesPtr correspondences(new pcl::Correspondences);
+	correspondences->reserve(source_keypoints->size()*K);
+
+	pcl::KdTreeFLANN<pcl::PointNormal> search_tree;
+	search_tree.setInputCloud(target_keypoints);
+
+	std::vector<int> index(K);
+	std::vector<float> L2_distance(K);
+	for (int i = 0; i < source_keypoints->size(); i++) {
+		if (search_tree.nearestKSearch(*source_keypoints, i, K, index, L2_distance) > 0) {
+			for (int j = 0; j < K; j++)
+				correspondences->push_back(pcl::Correspondence(i, index[j], L2_distance[j]));
+		}
+	}
+
+	for (pcl::Correspondence it : *correspondences)
+		outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << sqrt(it.distance) << endl;
+
+	return correspondences;
+}
+
+
+// Œë‘Î‰žœ‹Ž	‰Šú‘Î‰ž“_‚Ì³Œë”»’è
+pcl::CorrespondencesPtr nearest_search_test4(pcl::PointCloud<pcl::PointNormal>::Ptr source_keypoints, pcl::PointCloud<pcl::PointNormal>::Ptr target_keypoints, pcl::CorrespondencesPtr correspondences) {
+
+	int K = 1;
+
+	pcl::CorrespondencesPtr pCorrespondences(new pcl::Correspondences);
+	pCorrespondences->reserve(correspondences->size()*K);
+
+	pcl::KdTreeFLANN<pcl::PointNormal> search_tree;
+	search_tree.setInputCloud(target_keypoints);
+
+	std::vector<int> index(K);
+	std::vector<float> L2_distance(K);
+
+
+	// ‰Šú‘Î‰ž“_‚Ì³Œë”»’è
+	for (pcl::Correspondence it : *correspondences) {
+		if (search_tree.nearestKSearch(*source_keypoints, it.index_query, K, index, L2_distance) > 0) {
+			for (int j = 0; j < K; j++) {
+				if (L2_distance[j] < 1.0f) {
+					if (index[j] == it.index_match)
+						pCorrespondences->push_back(pcl::Correspondence(it.index_query, index[j], L2_distance[j]));
+				}
+			}
+		}
+	}
+
+
+	for (pcl::Correspondence it : *pCorrespondences)
+		outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << sqrt(it.distance) << endl;
+
+	return pCorrespondences;
+}
+
+// Œë‘Î‰žœ‹Ž	‰ñ“]Œã‚Ì‘Î‰ž“_
+pcl::CorrespondencesPtr nearest_search_test5(pcl::PointCloud<pcl::PointNormal>::Ptr source_keypoints, pcl::PointCloud<pcl::PointNormal>::Ptr target_keypoints, pcl::CorrespondencesPtr correspondences) {
+
+	int K = 1;
+
+	pcl::CorrespondencesPtr pCorrespondences(new pcl::Correspondences);
+	pCorrespondences->reserve(correspondences->size()*K);
+
+	pcl::KdTreeFLANN<pcl::PointNormal> search_tree;
+	search_tree.setInputCloud(target_keypoints);
+
+	std::vector<int> index(K);
+	std::vector<float> L2_distance(K);
+
+
+	// ‰ñ“]Œã‚Ì‘Î‰ž“_
+	for (int i = 0; i < source_keypoints->size(); i++) {
+		if (search_tree.nearestKSearch(*source_keypoints, i, K, index, L2_distance) > 0) {
+			for (int j = 0; j < K; j++) {
+				if (L2_distance[j] < 1.0f)
+					pCorrespondences->push_back(pcl::Correspondence(i, index[j], L2_distance[j]));
+			}
+		}
+	}
+
+
+	for (pcl::Correspondence it : *pCorrespondences)
+		outputfile << "i: " << it.index_query << "\tj: " << it.index_match << "\tdistance: " << sqrt(it.distance) << endl;
+
+	return pCorrespondences;
 }
 
 #endif // _PointSearch_HPP_

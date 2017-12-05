@@ -24,6 +24,8 @@
 #include "CorrespondenceGrouping.hpp"
 #include "DataMatching.hpp"
 
+#include "PCLViewer.hpp"
+
 #include <random>
 #include <queue>
 #include <chrono>
@@ -33,13 +35,17 @@
 //#include <pcl/features/normal_3d.h>
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/keypoints/harris_3d.h>
-#include <pcl/visualization/pcl_visualizer.h>
+//#include <pcl/visualization/pcl_visualizer.h>
 
 #include <pcl/features/integral_image_normal.h>
 
 #include "Output.h"
 
-
 #include "ForFixPoint.hpp"
+#include "CalSphereVolume.hpp"
+
+#include "Simulation20171030.hpp"
+#include "Simulation20171113.hpp"
+#include "Simulation20171127.hpp"
 
 #endif // _MAIN_H_

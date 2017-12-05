@@ -1,6 +1,2 @@
-accuracy: 100 [%]
-
-accuracy: 28.4211 [%]
-
-accuracy: 35.7895 [%]
+accuracy: 93.6842 [%]
 

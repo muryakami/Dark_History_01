@@ -82,6 +82,8 @@ pcl::PointCloud<pcl::PointNormal>::Ptr Detect_Cylinder(pcl::PointCloud<pcl::Poin
 	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_cylinder(new pcl::PointCloud<pcl::PointNormal>());
 	extract.filter(*cloud_cylinder);
 
+	cylinderData << "Cylinder coefficients: " << *coefficients_cylinder << std::endl;
+
 	return cloud_cylinder;//o—Í
 }
 

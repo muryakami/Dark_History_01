@@ -1402,7 +1402,7 @@ int main(int argc, char* argv[]) {
 
 
 
-
+/*
 	// フィックスポイント用
 
 	// 工具データ読み込み
@@ -1414,36 +1414,88 @@ int main(int argc, char* argv[]) {
 	// PPFの生成(STLデータ:A)	ソース
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point(new pcl::PointCloud<pcl::PointNormal>);
-	vector<myPPF> source_PPF = forFixPoint(filename, cloud_lattice, attention_point);
+	vector<myPPF> source_PPF = forFixPoint(filename, false, cloud_lattice, attention_point);
 
 	// PPFの生成(STLデータ:A)	ターゲット
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point2(new pcl::PointCloud<pcl::PointNormal>);
-	vector<myPPF> target_PPF2 = forFixPoint(filename2, cloud_lattice2, attention_point2);
+	vector<myPPF> target_PPF2 = forFixPoint(filename2, true, cloud_lattice2, attention_point2);
 
 	// PPFの生成(STLデータ:B)	ターゲット
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice3(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point3(new pcl::PointCloud<pcl::PointNormal>);
-	vector<myPPF> target_PPF3 = forFixPoint(filename3, cloud_lattice3, attention_point3);
+	vector<myPPF> target_PPF3 = forFixPoint(filename3, false, cloud_lattice3, attention_point3);
 
 	// PPFの生成(STLデータ:C)	ターゲット
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice4(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point4(new pcl::PointCloud<pcl::PointNormal>);
-	vector<myPPF> target_PPF4 = forFixPoint(filename4, cloud_lattice4, attention_point4);
+	vector<myPPF> target_PPF4 = forFixPoint(filename4, false, cloud_lattice4, attention_point4);
 
 	// 一致率の出力
 	outputAccuracy(&source_PPF, &target_PPF2);	// AとA
 	outputAccuracy(&source_PPF, &target_PPF3);	// AとB
 	outputAccuracy(&source_PPF, &target_PPF4);	// AとC
+	*/
+
+
+
+	/*
+	// 工具データ読み込み
+	const string filename = ".\\STL files\\NikonTurningTool.STL";
+	
+	// PPFの生成(STLデータ:A)	ソース
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point(new pcl::PointCloud<pcl::PointNormal>);
+	vector<myPPF> source_PPF = forFixPoint(filename, false, cloud_lattice, attention_point);
+
+	// PPFの生成(STLデータ:A)	ターゲット
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point2(new pcl::PointCloud<pcl::PointNormal>);
+	vector<myPPF> target_PPF2 = forFixPoint(filename, true, cloud_lattice2, attention_point2);
+
+	// 誤差の出力
+	nearest_search_test3(attention_point, attention_point2);
+
+	// 一致率の出力
+	outputAccuracy(&source_PPF, &target_PPF2);	// AとA
+	*/
+
+
+	//simulation20171030();
+	//simulation20171113();
+	simulation20171127();
 
 
 
 
 
+	// 球の体積を出力
+	for(double degree=0.0f;degree<=180;degree+=10)
+		calSphereVolume(degree);
 
+	// 球の表面積を出力
+	for (double degree = 0.0f; degree <= 180; degree += 10)
+		calSphereSurface(degree);
 
-
-
+	
+	cout << endl;
+	double hemisphere = 2.0f*M_PI;
+	double unit = hemisphere / 16;
+	/*for (double i = -hemisphere; i <= hemisphere; i += unit) {
+		double c = 1 - i / (2.0f*M_PI);
+		double rad = acos(c);
+		double degree = rad * 180 / M_PI;
+		cout << "ラジアン: " << rad << "\t度: " << degree << endl;
+	}*/
+	cout << endl;
+	for (double i = 0; i < 2*hemisphere+unit; i += unit) {
+		double c = 1 - i / (2.0f*M_PI);
+		if (c > 1) c = 1;
+		if (c < -1) c = -1;
+		double rad = acos(c);
+		double degree = rad * 180 / M_PI;
+		cout << fixed << setprecision(6) << "コサイン: "  << c <<"\tラジアン: " << rad << "\t度: " << degree << endl;
+	}
 
 
 
@@ -1478,6 +1530,23 @@ int main(int argc, char* argv[]) {
 	}
 	*/
 
+
+
+
+	/*
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice5(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point5(new pcl::PointCloud<pcl::PointNormal>);
+	//for (pcl::PointXYZ point : cloud_lattice2) {
+	//
+	//}
+
+	for (pcl::PointCloud<pcl::PointXYZ>::iterator it = cloud_lattice2->begin(); it != cloud_lattice2->end();it++) {
+		if (it->x < 6) cloud_lattice5->push_back(*it);
+	}
+	for (pcl::PointCloud<pcl::PointNormal>::iterator it = attention_point2->begin(); it != attention_point2->end(); it++) {
+		if (it->x < 6) attention_point5->push_back(*it);
+	}
+	*/
 
 
 
@@ -2396,172 +2465,7 @@ int main(int argc, char* argv[]) {
 
 
 	// 入力点群と法線を表示
-	boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer("3D Viewer"));
-	viewer->setBackgroundColor(0, 0, 0);
-
-	// StL
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> stl_color(stl_cloud, 0, 255, 0);
-	//viewer->addPointCloud(stl_cloud, stl_color, "stl_cloud");
-	//viewer->addPointCloudNormals<pcl::PointNormal>(stl_cloud, 1, 3.0, "stl_normals");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 5, "stl_cloud");
-
-	// StL
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> stl_color(surfaceN, 0, 255, 0);
-	//viewer->addPointCloud(surfaceN, stl_color, "stl_cloud");
-	//viewer->addPointCloudNormals<pcl::PointNormal>(surfaceN, 1, 3.0, "stl_normals");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 5, "stl_cloud");
-
-
-	// point cloud
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> pccolor(cloud, 255, 255, 255);
-	//viewer->addPointCloud(cloud, pccolor, "point_cloud");
-	/*pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> kpcolor(keypoints3D, 255, 0, 0);
-	viewer->addPointCloud(keypoints3D, kpcolor, "keypoints");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 7, "keypoints");
-	viewer->addPointCloudNormals<pcl::PointNormal>(keypoint_normals, 1, 7.0, "keypoint_normals");*/
-
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> pccolor_holder(holder_face, 255, 255, 255);
-	//viewer->addPointCloud(holder_face, pccolor_in, "holder_face");
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> pccolor_in(cloud_in, 255, 255, 255);
-	//viewer->addPointCloud(cloud_in, pccolor_in, "cloud_in");
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> pccolor_SAC(sample_vec, 0, 0, 255);
-	/*pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> pccolor_SAC(sample_vec, 0, 0, 255);
-	viewer->addPointCloud(sample_vec, pccolor_SAC, "sample_vec");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample_vec");
-
-	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> pccolor_SAC2(sample_vec2, 0, 255, 0);
-	viewer->addPointCloud(sample_vec2, pccolor_SAC2, "sample_vec2");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample_vec2");*/
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> tip_color(tip_point, 255, 0, 0);
-	//viewer->addPointCloud(tip_point, tip_color, "tip_point");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 7, "tip_point");
-
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> attention_color(attention_point, 255, 0, 0);
-	//viewer->addPointCloud(attention_point, attention_color, "attention_point");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 7, "attention_point");
-
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PrincipalCurvatures> pccolor_C(principal_curvatures, 255, 255, 255);
-	//viewer->addPointCloud(principal_curvatures, pccolor_C, "principal_curvatures");
-
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> kccolor(keypointsCurvature, 255, 0, 0);
-	//viewer->addPointCloud(keypointsCurvature, kccolor, "keypointsCurvature");
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> kccolor(keypointsCurvature, 255, 0, 0);
-	//viewer->addPointCloud(keypointsCurvature, kccolor, "keypointsCurvature");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 7, "keypointsCurvature");
-
-
-	/*int vp[2];
-	pcl::visualization::PointCloudColorHandlerRGBAField<pcl::PointXYZRGBA> rgba(attention_point2);
-	viewer->createViewPort(0.5, 0.0, 1.0, 1.0, vp[1]);
-	viewer->addSphere(attention_point2->points[10], 3.0, 0.0, 0.0, 0.0, "sphere");*/
-
-	/*int vp;
-	viewer->createViewPort(0.5, 0.0, 1.0, 1.0, vp);
-	viewer->addSphere(attention_point2->points[10], 3.0, 0.0, 0.5, 0.5, "sphere", vp);*/
-
-
-
-
-	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> lattice_color(cloud_lattice2, 255, 255, 255);
-	viewer->addPointCloud(cloud_lattice2, lattice_color, "cloud_lattice2");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud_lattice2");
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> cloudN_color(cloud_normals3, 255, 255, 255);
-	//viewer->addPointCloud(cloud_normals3, cloudN_color, "cloud_normals");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud_normals");
-
-
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> stl_color(surfaceN, 255, 255, 255);
-	//viewer->addPointCloud(surfaceN, stl_color, "stl_cloud");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "stl_cloud");
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> attention_color(attention_point, 255, 0, 0);
-	//viewer->addPointCloud(attention_point, attention_color, "attention_point");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 7, "attention_point");
-	//viewer->addPointCloudNormals<pcl::PointNormal>(attention_point, 1, 7.0, "attention_pointn");
-
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> stl_color2(surfaceN2, 255, 255, 255);
-	//viewer->addPointCloud(surfaceN2, stl_color2, "stl_cloud2");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "stl_cloud2");
-	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> attention_color2(attention_point2, 0, 255, 0);
-	viewer->addPointCloud(attention_point2, attention_color2, "attention_point2");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 7, "attention_point2");
-	viewer->addPointCloudNormals<pcl::PointNormal>(attention_point2, 1, 7.0, "attention_point2n");
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> pccolor(cloud, 0, 255, 0);
-	//viewer->addPointCloud(cloud, pccolor, "point_cloud");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 7, "point_cloud");
-
-
-	/*pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> kccolor(cloud, 255, 255, 255);
-	viewer->addPointCloud(cloud, kccolor, "cloud");
-
-	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> pccolor_SAC(sample_vec, 0, 0, 255);
-	viewer->addPointCloud(sample_vec, pccolor_SAC, "sample_vec");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample_vec");
-
-	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> pccolor_SAC2(sample_vec2, 255, 0, 0);
-	viewer->addPointCloud(sample_vec2, pccolor_SAC2, "sample_vec2");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "sample_vec2");*/
-
-
-	/*pcl::PointCloud<pcl::PointXYZ>::Ptr surface0(new pcl::PointCloud<pcl::PointXYZ>);
-	pcl::PointCloud<pcl::Normal>::Ptr surfaceN0(new pcl::PointCloud<pcl::Normal>);
-	pcl::copyPointCloud(*surfaceN, *surface0);
-	pcl::copyPointCloud(*surfaceN, *surfaceN0);
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> kccolor(surface0, 255, 255, 255);
-	viewer->addPointCloudNormals<pcl::PointXYZ, pcl::Normal>(surface0, surfaceN0, 2, 0.5, "surface0");*/
-
-	/*pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> kccolor(surfaceN, 255, 255, 255);
-	viewer->addPointCloudNormals<pcl::PointNormal>(surfaceN, 1, 0.1, "surfaceN");*/
-
-
-
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> kccolor(surfaceN, 255, 255, 255);
-	//viewer->addPointCloud(surfaceN, kccolor, "surfaceN");
-
-	/*pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> uni_color(uniquenessPoints, 255, 0, 0);
-	viewer->addPointCloud(uniquenessPoints, uni_color, "uniquenessPoints");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 8, "uniquenessPoints");*/
-
-
-
-	// StL
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> kp_color(keypoints, 255, 0, 0);
-	//viewer->addPointCloud(keypoints, kp_color, "keypoints");
-	//viewer->addPointCloudNormals<pcl::PointNormal>(keypoints, 1, 3.0, "kp_normals");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 5, "keypoints");
-
-
-
-
-	viewer->addCoordinateSystem(1.0);
-	viewer->initCameraParameters();
-
-	while (!viewer->wasStopped())
-	{
-		viewer->spinOnce(100);
-		boost::this_thread::sleep(boost::posix_time::microseconds(100000));
-	}
+	//viewPointCloud(cloud_lattice2, attention_point2);
 
 	return (0);
 }

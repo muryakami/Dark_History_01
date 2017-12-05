@@ -9,13 +9,13 @@
 #include "KeypointNormals.hpp"
 #include <chrono>
 
-vector<myPPF> forFixPoint(string filename, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice, pcl::PointCloud<pcl::PointNormal>::Ptr attention_point) {
+vector<myPPF> forFixPoint(string filename, boolean TF, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice, pcl::PointCloud<pcl::PointNormal>::Ptr attention_point) {
 
 	std::chrono::system_clock::time_point start, end; // 型は auto で可
 	double elapsed;
 
 	// STLデータの内挿補間
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in = interpolation_stl(filename, false);
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in = interpolation_stl(filename, TF); // trueでノイズ付与
 	// 点群の格子化（ダウンサンプリング）
 	pcl::VoxelGrid<pcl::PointXYZ> sor;
 	sor.setInputCloud(cloud_in);
@@ -39,11 +39,11 @@ vector<myPPF> forFixPoint(string filename, pcl::PointCloud<pcl::PointXYZ>::Ptr c
 }
 
 // 一致率の出力
-void outputAccuracy(vector<myPPF>* source_PPF, vector<myPPF>* target_PPF) {
+/*void outputAccuracy(vector<myPPF>* source_PPF, vector<myPPF>* target_PPF) {
 	int match_cloud = myLightPPF_matching(*source_PPF, *target_PPF);
 	accuracy_file << "accuracy: " << (float)match_cloud / target_PPF->size() * 100 << " [%]" << endl;
 	accuracy_file << endl;
-}
+}*/
 
 
 #endif // _ForFixPoint_HPP_

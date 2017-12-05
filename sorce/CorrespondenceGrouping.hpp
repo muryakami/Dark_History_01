@@ -492,7 +492,8 @@ void CorrespondenceGrouping() {
 
 	// Œë‘Î‰œ‹
 	//pcl::CorrespondencesPtr pCorrespondences = myRefiningMatching2(correspondences, source_keypointsXYZ, target_keypointsXYZ);
-	pcl::CorrespondencesPtr pCorrespondences = myRefiningMatching2_2(correspondences, source_keypointsXYZ, target_keypointsXYZ);
+	//pcl::CorrespondencesPtr pCorrespondences = myRefiningMatching2_2(correspondences, source_keypointsXYZ, target_keypointsXYZ);
+	pcl::CorrespondencesPtr pCorrespondences = myRefiningMatching2_2(correspondences, attention_point, attention_point2);
 	// R‚ÆT‚Ì„’è
 	//Eigen::Matrix4f transformation = myEstimatingTransformation2(source_features);
 	//pcl::registration::TransformationEstimationSVD< pcl::PointXYZ, pcl::PointXYZ > est;
