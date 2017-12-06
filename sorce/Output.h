@@ -29,4 +29,8 @@ ofstream correspondencesOut("C:\\Users\\yuki\\Documents\\進捗報告\\05\\outputfil
 
 ofstream cylinderData("C:\\Users\\yuki\\Documents\\進捗報告\\05\\outputfile\\cylinderData000.txt");
 
+ofstream cylinderDataRadius("C:\\Users\\yuki\\Documents\\進捗報告\\05\\outputfile\\cylinderDataRadius000.txt");
+ofstream cylinderDataAxis("C:\\Users\\yuki\\Documents\\進捗報告\\05\\outputfile\\cylinderDataAxis000.txt");
+ofstream cylinderDataPCA("C:\\Users\\yuki\\Documents\\進捗報告\\05\\outputfile\\cylinderDataPCA000.txt");
+
 #endif // _OUTPUT_H_

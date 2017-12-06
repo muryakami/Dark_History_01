@@ -61,7 +61,7 @@ pcl::PointCloud<pcl::PointNormal>::Ptr Detect_Cylinder(pcl::PointCloud<pcl::Poin
 	seg.setNormalDistanceWeight(0.087); //0.01  0.087=sin5度 0.174=sin10度
 	seg.setMaxIterations(10000);
 	seg.setDistanceThreshold(1.00); //0.05	0.10
-	seg.setRadiusLimits(0, 30.0); // 0,0.1		0, 20.0
+	seg.setRadiusLimits(4.0, 13.5); // 0,0.1		0, 20.0		0, 30.0		4.0, 13,5
 	seg.setInputCloud(cloud_filtered);
 	seg.setInputNormals(cloud_normals);
 	//seg.setAxis(Eigen::Vector3f(1.0f, 0.0f, 0.0f)); // 任意軸？(自分で設定) 実験的に追加
@@ -84,7 +84,48 @@ pcl::PointCloud<pcl::PointNormal>::Ptr Detect_Cylinder(pcl::PointCloud<pcl::Poin
 
 	cylinderData << "Cylinder coefficients: " << *coefficients_cylinder << std::endl;
 
+	cylinderDataRadius << coefficients_cylinder->values.at(6) << endl;
+
 	return cloud_cylinder;//出力
 }
+
+
+pcl::PointCloud<pcl::PointNormal>::Ptr Detect_Cylinder2(pcl::PointCloud<pcl::PointNormal>::Ptr cloud, pcl::ModelCoefficients::Ptr coefficients_cylinder) {
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_filtered(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::PointCloud<pcl::Normal>::Ptr cloud_normals(new pcl::PointCloud<pcl::Normal>);
+
+	pcl::copyPointCloud(*cloud, *cloud_filtered);
+	pcl::copyPointCloud(*cloud, *cloud_normals);
+
+	pcl::PointIndices::Ptr inliers_cylinder(new pcl::PointIndices);
+	pcl::SACSegmentationFromNormals <pcl::PointXYZ, pcl::Normal> seg;
+
+	// Create the segmentation object for cylinder segmentation and set all the parameters
+	seg.setOptimizeCoefficients(true);
+	seg.setModelType(pcl::SACMODEL_CYLINDER); // SACMODEL_CYLINDER SACMODEL_CIRCLE3D
+	seg.setMethodType(pcl::SAC_RANSAC); // SAC_RANSAC SAC_RRANSAC SAC_RMSAC SAC_MLESAC
+	seg.setNormalDistanceWeight(0.087); //0.01  0.087=sin5度 0.174=sin10度
+	seg.setMaxIterations(10000);
+	seg.setDistanceThreshold(1.00); //0.05	0.10
+	seg.setRadiusLimits(4.0, 13.5); // 4.0, 12,5
+	seg.setInputCloud(cloud_filtered);
+	seg.setInputNormals(cloud_normals);
+	//seg.setAxis(Eigen::Vector3f(1.0f, 0.0f, 0.0f)); // 任意軸？(自分で設定) 実験的に追加
+
+	// Obtain the cylinder inliers and coefficients
+	seg.segment(*inliers_cylinder, *coefficients_cylinder);
+	std::cerr << "Cylinder coefficients: " << *coefficients_cylinder << std::endl;
+
+	// Write the cylinder inliers to disk
+	pcl::ExtractIndices<pcl::PointNormal> extract;
+	extract.setInputCloud(cloud);
+	extract.setIndices(inliers_cylinder);
+	extract.setNegative(false);
+	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_cylinder(new pcl::PointCloud<pcl::PointNormal>());
+	extract.filter(*cloud_cylinder);
+
+	return cloud_cylinder;//出力
+}
+
 
 #endif // _RANSAC_HPP_

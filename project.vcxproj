@@ -358,6 +358,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\Simulation20171113.hpp" />
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\SurfaceNormals.hpp" />
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\VoxelGrid.hpp" />
+    <ClInclude Include="sorce\CalRotationMatrix.hpp" />
     <ClInclude Include="sorce\Simulation20171127.hpp" />
   </ItemGroup>
   <ItemGroup>

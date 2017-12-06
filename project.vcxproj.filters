@@ -129,6 +129,9 @@
     <ClInclude Include="sorce\Simulation20171127.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sorce\CalRotationMatrix.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\yuki\Documents\Project_07\CMakeLists.txt" />
