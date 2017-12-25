@@ -47,5 +47,7 @@
 #include "Simulation20171030.hpp"
 #include "Simulation20171113.hpp"
 #include "Simulation20171127.hpp"
+#include "Simulation20180101.hpp"
+
 
 #endif // _MAIN_H_

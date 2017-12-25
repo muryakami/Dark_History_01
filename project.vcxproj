@@ -360,6 +360,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\VoxelGrid.hpp" />
     <ClInclude Include="sorce\CalRotationMatrix.hpp" />
     <ClInclude Include="sorce\Simulation20171127.hpp" />
+    <ClInclude Include="sorce\Simulation20180101.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\yuki\Documents\Project_07\ZERO_CHECK.vcxproj">

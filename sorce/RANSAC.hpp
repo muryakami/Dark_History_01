@@ -107,14 +107,14 @@ pcl::PointCloud<pcl::PointNormal>::Ptr Detect_Cylinder2(pcl::PointCloud<pcl::Poi
 	seg.setNormalDistanceWeight(0.087); //0.01  0.087=sin5度 0.174=sin10度
 	seg.setMaxIterations(10000);
 	seg.setDistanceThreshold(1.00); //0.05	0.10
-	seg.setRadiusLimits(4.0, 13.5); // 4.0, 12,5
+	seg.setRadiusLimits(3.0, 13.5); // 4.0, 12,5
 	seg.setInputCloud(cloud_filtered);
 	seg.setInputNormals(cloud_normals);
 	//seg.setAxis(Eigen::Vector3f(1.0f, 0.0f, 0.0f)); // 任意軸？(自分で設定) 実験的に追加
 
 	// Obtain the cylinder inliers and coefficients
 	seg.segment(*inliers_cylinder, *coefficients_cylinder);
-	std::cerr << "Cylinder coefficients: " << *coefficients_cylinder << std::endl;
+	//std::cerr << "Cylinder coefficients: " << *coefficients_cylinder << std::endl;
 
 	// Write the cylinder inliers to disk
 	pcl::ExtractIndices<pcl::PointNormal> extract;

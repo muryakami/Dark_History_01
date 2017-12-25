@@ -94,7 +94,9 @@ void simulation20171127() {
 			cylinderDataPCA << s2 << std::endl;
 			*/
 
-
+			cylinderData << "cloud: " << cloud_lattice->size() << endl;
+			cylinderData << "cylinder: " << cloud_cylinder->size() << endl;
+			cylinderData << "rate: " << (float)cloud_cylinder->size() / cloud_lattice->size() * 100 << endl;
 
 
 			//重心の計算
@@ -168,7 +170,7 @@ void simulation20171127() {
 			centroid_axis2.y = rotate_matrix2(1, 0) * centroid.x + rotate_matrix2(1, 1) * centroid.y + rotate_matrix2(1, 2) * centroid.z;
 			centroid_axis2.z = rotate_matrix2(2, 0) * centroid.x + rotate_matrix2(2, 1) * centroid.y + rotate_matrix2(2, 2) * centroid.z;
 
-			// 標準偏差σの計算
+			// 標準偏差σの計算（距離の偏差の二乗平均平方根）
 			float s_axis2 = 0;
 			for (pcl::PointXYZ point : *cloud_rotated) {
 				s_axis2 += (point.x - centroid_axis.x)*(point.x - centroid_axis.x) + (point.y - centroid_axis.y)*(point.y - centroid_axis.y);
