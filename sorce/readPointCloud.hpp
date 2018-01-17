@@ -6,6 +6,7 @@
 #include <fstream>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
+#include "Output.h"
 
 using namespace std;
 
@@ -26,15 +27,19 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr myifstream_test(string filename) {
 
 	while (getline(ifs, str)) {
 		pcl::PointXYZ point;
-		//sscanf_s(str.data(), "%f,%f,%f", &point.x, &point.y, &point.z);
-		sscanf_s(str.data(), "%f\t%f\t%f", &point.x, &point.y, &point.z);
-		point.x /= 500;		//500
-		point.y /= 500;		//500
-		point.z /= 1000;	//1000
+
+		sscanf_s(str.data(), "%f,%f,%f", &point.x, &point.y, &point.z);
 		/////// çHãÔêÊí[ÇÃÇ› ///////
-		//if (point.z < 44) continue;
+		if (point.z < 44) continue;
 		////////////////////////////
+
+		//sscanf_s(str.data(), "%f\t%f\t%f", &point.x, &point.y, &point.z);
+		//point.x /= 500;		//500
+		//point.y /= 500;		//500
+		//point.z /= 1000;	//1000
+
 		cloud_ptr->points.push_back(point);
+		//rpcIO << point.x << "," << point.y << "," << point.z << endl;
 	}
 	//cloud_ptr->width = (int)cloud_ptr->points.size();
 	//cloud_ptr->height = 1;

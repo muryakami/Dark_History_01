@@ -204,18 +204,42 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_stl(string filename, bool TF) 
 
 pcl::PointCloud<pcl::PointNormal>::Ptr make_occlusion(pcl::PointCloud<pcl::PointNormal>::Ptr cloud)
 {
-	pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f);//視点の決定
+	pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f); // 視点
 
 	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals(new pcl::PointCloud<pcl::PointNormal>);
 	for (pcl::PointCloud<pcl::PointNormal>::iterator it = cloud->begin(); it != cloud->end(); it++) {
+		// 平面の法線
 		pcl::PointXYZ n(it->normal_x, it->normal_y, it->normal_z);
+		// 法線から視点へのベクトル
 		pcl::PointXYZ vppi(view_point.x - it->x, view_point.y - it->y, view_point.z - it->z);
-		if (dot_product3_cal(n, vppi) < 0) continue; // 正しい
-		//if (dot_product3_cal(n, vppi) > 0) continue; // 誤り
+		if (dot_product3_cal(n, vppi) < 0) continue; // 視点から見て内側に法線を持つ点（視点から見える部分）
+		//if (dot_product3_cal(n, vppi) > 0) continue; // 視点から見て外側に法線を持つ点（視点から見えない部分）
 		cloud_normals->push_back(*it);
 	}
 
 	return cloud_normals;
 }
+
+pcl::PointCloud<pcl::PointNormal>::Ptr make_occlusion(pcl::PointCloud<pcl::PointNormal>::Ptr cloud, pcl::PointXYZ view_point, bool TF)
+{
+	//pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f); // 視点
+
+	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals(new pcl::PointCloud<pcl::PointNormal>);
+	for (pcl::PointCloud<pcl::PointNormal>::iterator it = cloud->begin(); it != cloud->end(); it++) {
+		// 平面の法線
+		pcl::PointXYZ n(it->normal_x, it->normal_y, it->normal_z);
+		// 法線から視点へのベクトル
+		pcl::PointXYZ vppi(view_point.x - it->x, view_point.y - it->y, view_point.z - it->z);
+		if (TF) {
+			if (dot_product3_cal(n, vppi) < 0) continue; // 視点から見て内側に法線を持つ点（視点から見える部分）
+		} else {
+			if (dot_product3_cal(n, vppi) > 0) continue; // 視点から見て外側に法線を持つ点（視点から見えない部分）
+		}
+		cloud_normals->push_back(*it);
+	}
+
+	return cloud_normals;
+}
+
 
 #endif // _InterpolationSTL_HPP_

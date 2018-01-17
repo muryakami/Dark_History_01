@@ -132,7 +132,16 @@
     <ClInclude Include="sorce\CalRotationMatrix.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sorce\Simulation20180101.hpp">
+    <ClInclude Include="sorce\MakeModelPPF.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\MakeMeasurementPPF.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\JacobiAnother.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Projection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

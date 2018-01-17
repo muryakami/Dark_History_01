@@ -99,6 +99,14 @@ array<array<double, 3>, 3> cal_PCA(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud) {
 	//cout << "eigenvalue[1][0]: " << eigenvalue[1][0] << endl;
 	//cout << "eigenvalue[2][0]: " << eigenvalue[2][0] << endl;
 
+	rpc3d << "固有値：" << eigenvalue[0][0] << endl;
+	rpc3d << "固有ベクトル：" << eigenvalue[0][1] << "\t" << eigenvalue[0][2] << "\t" << eigenvalue[0][3] << endl;
+	rpc3d << "固有値：" << eigenvalue[1][0] << endl;
+	rpc3d << "固有ベクトル：" << eigenvalue[1][1] << "\t" << eigenvalue[1][2] << "\t" << eigenvalue[1][3] << endl;
+	rpc3d << "固有値：" << eigenvalue[2][0] << endl;
+	rpc3d << "固有ベクトル：" << eigenvalue[2][1] << "\t" << eigenvalue[2][2] << "\t" << eigenvalue[2][3] << endl;
+	rpc3d << endl;
+
 	return eigenvector;
 }
 
@@ -152,8 +160,16 @@ array<array<double, 2>, 2> cal_PCA2(vector<array<float, 2>> cloud) {
 		eigenvector[j][1] = eigenvalue[j][2];
 	}
 
-	cout << "eigenvalue[0][0]: " << eigenvalue[0][0] << endl;
-	cout << "eigenvalue[1][0]: " << eigenvalue[1][0] << endl;
+	//cout << "eigenvalue[0][0]: " << eigenvalue[0][0] << endl;
+	//cout << "eigenvalue[1][0]: " << eigenvalue[1][0] << endl;
+
+	rpc2d << "固有値：" << eigenvalue[0][0] << endl;
+	rpc2d << "固有ベクトル：" << eigenvalue[0][1] << "\t" << eigenvalue[0][2] << endl;
+	rpc2d << "固有値：" << eigenvalue[1][0] << endl;
+	rpc2d << "固有ベクトル：" << eigenvalue[1][1] << "\t" << eigenvalue[1][2] << endl;
+	rpc2d << endl;
+	rpc2d << endl;
+	rpc2d << endl;
 
 	return eigenvector;
 }

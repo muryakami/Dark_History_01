@@ -459,7 +459,9 @@ int main(int argc, char* argv[]) {
 	/*pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals2 = surface_normals(cloud_lattice2);
 	// 特徴点検出，特徴量計算
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point2 = myFeaturePointExtraction(cloud_normals2);
-	//オクルージョン有り (テスト)
+	//
+	
+	有り (テスト)
 	//pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals3 = make_occlusion(cloud_normals2);
 	//pcl::PointCloud<pcl::PointNormal>::Ptr attention_point2 = myFeaturePointExtraction(cloud_normals3);*/
 
@@ -1464,7 +1466,17 @@ int main(int argc, char* argv[]) {
 	//simulation20171030();
 	//simulation20171113();
 	//simulation20171127();
-	simulation20180101();
+
+	//makeModelPPF();
+
+	//const string filename = "..\\DataBase\\Point cloud files\\Turning tool in tool holder\\point_cloud_External_Turning_Tool_Moved.txt";
+	//makeMeasurementPPF(filename);
+
+	//const string filename = ".\\STL files\\NikonTurningTool.STL";
+	const string filename = "..\\DataBase\\Tool\\STL files\\NikonTurningTool.STL";
+	//const string filename = "..\\DataBase\\Tool\\2020\\BRS2000S25.STL";
+	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\立方体.STL";
+	makeModelPPF(filename);
 
 
 
@@ -1547,23 +1559,113 @@ int main(int argc, char* argv[]) {
 	}
 	*/
 
+	cout << endl;
+	array<array<double, 3>, 2> Jtest1 = run_Jacobi2_test(4.0f, 1.0f, -2.0f, 1.0f);
+	cout << "固有値：" << Jtest1[0][0] << endl;
+	cout << "固有ベクトル：" << Jtest1[0][1] << "\t" << Jtest1[0][2] << endl;
+	cout << "固有値：" << Jtest1[1][0] << endl;
+	cout << "固有ベクトル：" << Jtest1[1][1] << "\t" << Jtest1[1][2] << endl;
+
+	cout << endl;
+	array<array<double, 3>, 2> Jtest2 = run_Jacobi2_test(3.0f, 5.0f, 4.0f, 2.0f);
+	cout << "固有値：" << Jtest2[0][0] << endl;
+	cout << "固有ベクトル：" << Jtest2[0][1] << "\t" << Jtest2[0][2] << endl;
+	cout << "固有値：" << Jtest2[1][0] << endl;
+	cout << "固有ベクトル：" << Jtest2[1][1] << "\t" << Jtest2[1][2] << endl;
+
+	//S_RunJacobi();
+
+	cout << endl;
+	array<array<double, 4>, 3> Jtest3 = run_Jacobi_test(4.0f, 1.0f, 0.0f, -2.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	cout << "固有値：" << Jtest3[0][0] << endl;
+	cout << "固有ベクトル：" << Jtest3[0][1] << "\t" << Jtest3[0][2] << "\t" << Jtest3[0][3] << endl;
+	cout << "固有値：" << Jtest3[1][0] << endl;
+	cout << "固有ベクトル：" << Jtest3[1][1] << "\t" << Jtest3[1][2] << "\t" << Jtest3[1][3] << endl;
+	cout << "固有値：" << Jtest3[2][0] << endl;
+	cout << "固有ベクトル：" << Jtest3[2][1] << "\t" << Jtest3[2][2] << "\t" << Jtest3[2][3] << endl;
+
+	cout << endl;
+	array<array<double, 4>, 3> Jtest4 = run_Jacobi_test(3.0f, 5.0f, 0.0f, 4.0f, 2.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	cout << "固有値：" << Jtest4[0][0] << endl;
+	cout << "固有ベクトル：" << Jtest4[0][1] << "\t" << Jtest4[0][2] << "\t" << Jtest4[0][3] << endl;
+	cout << "固有値：" << Jtest4[1][0] << endl;
+	cout << "固有ベクトル：" << Jtest4[1][1] << "\t" << Jtest4[1][2] << "\t" << Jtest4[1][3] << endl;
+	cout << "固有値：" << Jtest4[2][0] << endl;
+	cout << "固有ベクトル：" << Jtest4[2][1] << "\t" << Jtest4[2][2] << "\t" << Jtest4[2][3] << endl;
+
+
+	cout << endl;
+	array<array<double, 4>, 3> Jtest5 = run_Jacobi_test(1.0f, 1.0f, 0.0f, 1.0f, 2.0f, 1.0f, 2.0f, 5.0f, 3.0f);
+	cout << "固有値：" << Jtest5[0][0] << endl;
+	cout << "固有ベクトル：" << Jtest5[0][1] << "\t" << Jtest5[0][2] << "\t" << Jtest5[0][3] << endl;
+	cout << "固有値：" << Jtest5[1][0] << endl;
+	cout << "固有ベクトル：" << Jtest5[1][1] << "\t" << Jtest5[1][2] << "\t" << Jtest5[1][3] << endl;
+	cout << "固有値：" << Jtest5[2][0] << endl;
+	cout << "固有ベクトル：" << Jtest5[2][1] << "\t" << Jtest5[2][2] << "\t" << Jtest5[2][3] << endl;
 
 
 
+	cout << endl;
+	cout << endl;
+	pcl::PointXYZ projectionTestA(1.0f, -2.0f, 4.0f);
+	pcl::PointXYZ projectionTestB(0.0f, 0.0f, 1.0f);
+
+	pcl::PointXYZ projection1 = Projection1(projectionTestA, projectionTestB);
+	cout << projection1.x << endl;
+	cout << projection1.y << endl;
+	cout << projection1.z << endl;
+	cout << endl;
+
+	pcl::PointXYZ projection2 = Projection2(projectionTestA, projectionTestB);
+	cout << projection2.x << endl;
+	cout << projection2.y << endl;
+	cout << projection2.z << endl;
+	cout << endl;
+
+	pcl::PointXYZ projection3 = Projection3(projectionTestA, projectionTestB);
+	cout << projection3.x << endl;
+	cout << projection3.y << endl;
+	cout << projection3.z << endl;
+	cout << endl;
+
+
+	//pcl::PointNormal projectionTestC(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
+	pcl::PointNormal projectionTestC;
+	projectionTestC.x = 0.0f;
+	projectionTestC.y = 0.0f;
+	projectionTestC.z = 0.0f;
+	projectionTestC.normal_x = 0.0f;
+	projectionTestC.normal_y = 1.0f;
+	projectionTestC.normal_z = 0.0f;
+	pcl::PointXYZ projection4 = Projection4(projectionTestA, projectionTestC);
+	cout << projection4.x << endl;
+	cout << projection4.y << endl;
+	cout << projection4.z << endl;
+	cout << endl;
+
+	pcl::PointNormal projectionTestD;
+	projectionTestD.x = 0.0f;
+	projectionTestD.y = 0.0f;
+	projectionTestD.z = 1.0f;
+	projectionTestD.normal_x = 2.0f;
+	projectionTestD.normal_y = 3.0f;
+	projectionTestD.normal_z = -1.0f;
+	pcl::PointXYZ projection5 = Projection4(projectionTestA, projectionTestD);
+	cout << projection5.x << endl;
+	cout << projection5.y << endl;
+	cout << projection5.z << endl;
+	cout << endl;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+	cout << endl;
+	for (float d = 0.0f; d < 360.0f; d += 10.0f) {
+		double R = d * M_PI / 180;
+		double cosR = cos(R);
+		double r = acos(cosR);
+		double D = r * 180 / M_PI;
+		cout << d << ": " << D << endl;
+	}
 
 
 

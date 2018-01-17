@@ -231,6 +231,8 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr myFeaturePointExtraction_HarrisN3(pcl::Point
 	// パラメータ
 	float radius = 3.0f; // 3.0f 5.0f 7.0f 0.3f
 	float threshold = 1e-12; // 0.005f(旋削工具) 1e-6(回転工具)
+	//float threshold = 0.005f; // 0.005f(旋削工具) 1e-6(回転工具)
+	//float threshold = 1e-72; // 意味ないかも
 
 	// 特徴点検出
 	std::cout << "detection" << std::endl;
@@ -252,9 +254,10 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr myFeaturePointExtraction_HarrisN3(pcl::Point
 	keypointsXYZ->points.resize(keypoints->points.size());
 	pcl::copyPointCloud(*keypoints, *keypointsXYZ);
 
-	//return keypointsXYZ;
+	return keypointsXYZ;
 
-	// 点の数
+	/*
+	// 点の数(-nan出るかも)
 	std::sort(keypoints->begin(), keypoints->end(), compare_intensity); // 比較関数を指定してソート
 	int numThreshold = 50; //15 20
 	int count = 0;
@@ -266,6 +269,47 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr myFeaturePointExtraction_HarrisN3(pcl::Point
 	}
 
 	return cloud_ptr;
+	*/
+}
+
+
+// 特徴点検出
+pcl::PointCloud<pcl::PointXYZINormal>::Ptr myFeaturePointExtraction_HarrisN4(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud) {
+
+	// パラメータ
+	float radius = 3.0f; // 3.0f 5.0f 7.0f 0.3f
+	float threshold = 1e-12; // 0.005f(旋削工具) 1e-6(回転工具)
+	//float threshold = 0.005f; // 0.005f(旋削工具) 1e-6(回転工具)
+	//float threshold = 1e-72; // 意味ないかも
+
+	// 特徴点検出
+	std::cout << "detection" << std::endl;
+	pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::Ptr detector(new pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>());
+	detector->setNonMaxSupression(true);
+	//detector->setNonMaxSupression(false);
+	detector->setRadius(radius);
+	detector->setRadiusSearch(radius); // 最近傍の決定に使用
+	detector->setThreshold(threshold);
+	//detector->setMethod(pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::TOMASI); // HARRIS, NOBLE, LOWE, TOMASI, CURVATURE
+	detector->setMethod(pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::HARRIS); // HARRIS, NOBLE, LOWE, TOMASI, CURVATURE
+	//detector->setMethod(pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::CURVATURE); // HARRIS, NOBLE, LOWE, TOMASI, CURVATURE
+
+	detector->setInputCloud(cloud);
+	//detector->setSearchSurface(cloud); // 法線推定にダウンサンプリング前の点群を使用できる
+	pcl::PointCloud<pcl::PointXYZI>::Ptr keypoints(new pcl::PointCloud<pcl::PointXYZI>());
+	detector->compute(*keypoints);
+	cout << "number of source keypoints found: " << keypoints->points.size() << endl;
+
+	//pcl::PointCloud<pcl::PointXYZ>::Ptr keypointsXYZ(new pcl::PointCloud<pcl::PointXYZ>());
+	//keypointsXYZ->points.resize(keypoints->points.size());
+	//pcl::copyPointCloud(*keypoints, *keypointsXYZ);
+
+	// 特徴点の法線生成
+	pcl::PointCloud<pcl::PointXYZINormal>::Ptr attention_point(new pcl::PointCloud<pcl::PointXYZINormal>);
+	*attention_point = *myKeypoint_normals2(cloud, keypoints);
+
+	return attention_point;
+
 }
 
 #endif // _Harris_HPP_
