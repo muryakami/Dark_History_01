@@ -158,7 +158,7 @@ void makeModelPPF(const string targetPath) {
 	// Harris特徴点の中で独自性の高いものを抽出
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myFeaturePointExtractionRe2(keypointsXYZINormal, cloud_normals);
 	*/
-	/*
+	
 	// オクルージョンの作成
 	pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f); // 視点
 	//pcl::PointXYZ view_point(20.0f, 20.0f, -20.0f); // 視点
@@ -170,7 +170,7 @@ void makeModelPPF(const string targetPath) {
 	pcl::PointCloud<pcl::PointXYZINormal>::Ptr keypointsXYZINormal = myFeaturePointExtraction_HarrisN4(occlusion_cloud);
 	// Harris特徴点の中で独自性の高いものを抽出
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myFeaturePointExtractionRe2(keypointsXYZINormal, occlusion_cloud_normals);
-	*/
+	
 
 	/*
 	// 高曲率の中で独自性の高いものを抽出
