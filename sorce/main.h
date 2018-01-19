@@ -52,6 +52,7 @@
 #include "MakeMeasurementPPF.hpp"
 #include "JacobiAnother.hpp"
 #include "Projection.hpp"
+#include "MakeAccuracyFile.hpp"
 
 
 #endif // _MAIN_H_

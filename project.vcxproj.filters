@@ -144,6 +144,7 @@
     <ClInclude Include="sorce\Projection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sorce\MakeAccuracyFile.hpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\yuki\Documents\Project_07\CMakeLists.txt" />

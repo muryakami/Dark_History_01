@@ -90,11 +90,18 @@ void makeModelPPF() {
 			// 法線の生成
 			pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals = surface_normals(cloud_lattice);
 
+
 			// 特徴点検出
-			pcl::PointCloud<pcl::PointXYZ>::Ptr keypointsXYZ = myFeaturePointExtraction_HarrisN3(cloud_lattice);
+			//pcl::PointCloud<pcl::PointXYZ>::Ptr keypointsXYZ = myFeaturePointExtraction_HarrisN3(cloud_lattice);
 
 			// 特徴点の法線生成
-			*attention_point = *myKeypoint_normals(cloud_lattice, keypointsXYZ);
+			//*attention_point = *myKeypoint_normals(cloud_lattice, keypointsXYZ);
+
+			// Harris特徴点検出
+			pcl::PointCloud<pcl::PointXYZINormal>::Ptr keypointsXYZINormal = myFeaturePointExtraction_HarrisN4(cloud_lattice);
+
+			// Harris特徴点の中で独自性の高いものを抽出
+			pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myFeaturePointExtractionRe2(keypointsXYZINormal, cloud_normals);
 
 			// PPFの作成
 			vector<myPPF> model_PPF = make_lightPPFs(attention_point);
@@ -134,11 +141,14 @@ void makeModelPPF(const string targetPath) {
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in = interpolation_stl2(filename.string());
 
 	// 点群の格子化（ダウンサンプリング）
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice(new pcl::PointCloud<pcl::PointXYZ>);
+	/*pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice(new pcl::PointCloud<pcl::PointXYZ>);
 	pcl::VoxelGrid<pcl::PointXYZ> sor;
 	sor.setInputCloud(cloud_in);
 	sor.setLeafSize(0.5f, 0.5f, 0.5f);
-	sor.filter(*cloud_lattice);
+	sor.filter(*cloud_lattice);*/
+
+	// ダウンサンプリングしない
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice = cloud_in;
 
 	// 法線の生成
 	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals = surface_normals(cloud_lattice);
@@ -152,13 +162,13 @@ void makeModelPPF(const string targetPath) {
 	*/
 
 
-	/*
+	
 	// Harris特徴点検出
 	pcl::PointCloud<pcl::PointXYZINormal>::Ptr keypointsXYZINormal = myFeaturePointExtraction_HarrisN4(cloud_lattice);
 	// Harris特徴点の中で独自性の高いものを抽出
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myFeaturePointExtractionRe2(keypointsXYZINormal, cloud_normals);
-	*/
 	
+	/*
 	// オクルージョンの作成
 	pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f); // 視点
 	//pcl::PointXYZ view_point(20.0f, 20.0f, -20.0f); // 視点
@@ -170,7 +180,7 @@ void makeModelPPF(const string targetPath) {
 	pcl::PointCloud<pcl::PointXYZINormal>::Ptr keypointsXYZINormal = myFeaturePointExtraction_HarrisN4(occlusion_cloud);
 	// Harris特徴点の中で独自性の高いものを抽出
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myFeaturePointExtractionRe2(keypointsXYZINormal, occlusion_cloud_normals);
-	
+	*/
 
 	/*
 	// 高曲率の中で独自性の高いものを抽出
@@ -214,14 +224,14 @@ void makeModelPPF(const string targetPath) {
 	viewer->initCameraParameters();
 
 	// 入力点群の表示
-	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(cloud_lattice, 255, 255, 255);
-	//viewer->addPointCloud(cloud_lattice, cloud_color, "cloud_lattice");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud_lattice");
+	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(cloud_lattice, 255, 255, 255);
+	viewer->addPointCloud(cloud_lattice, cloud_color, "cloud_lattice");
+	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud_lattice");
 
 	// 入力点群の表示（オクルージョン）
-	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(occlusion_cloud, 255, 255, 255);
-	viewer->addPointCloud(occlusion_cloud, cloud_color, "cloud_lattice");
-	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud_lattice");
+	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(occlusion_cloud, 255, 255, 255);
+	//viewer->addPointCloud(occlusion_cloud, cloud_color, "cloud_lattice");
+	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud_lattice");
 
 	// 特徴点の表示
 	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> attention_point_color(attention_point, 0, 255, 0);

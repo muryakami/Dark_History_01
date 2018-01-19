@@ -1470,13 +1470,19 @@ int main(int argc, char* argv[]) {
 	//makeModelPPF();
 
 	//const string filename = "..\\DataBase\\Point cloud files\\Turning tool in tool holder\\point_cloud_External_Turning_Tool_Moved.txt";
-	//makeMeasurementPPF(filename);
+	//makeMeasurementPPF2(filename);
 
 	//const string filename = ".\\STL files\\NikonTurningTool.STL";
-	const string filename = "..\\DataBase\\Tool\\STL files\\NikonTurningTool.STL";
+	//const string filename = "..\\DataBase\\Tool\\STL files\\NikonTurningTool.STL";
 	//const string filename = "..\\DataBase\\Tool\\2020\\BRS2000S25.STL";
 	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\óßï˚ëÃ.STL";
+	const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\éOäpêç.STL";
 	makeModelPPF(filename);
+
+
+	//const string filename = "..\\DataBase\\Point cloud files\\Turning tool in tool holder\\point_cloud_External_Turning_Tool_Moved.txt";
+	//vector<myPPF> measurement_PPF = makeMeasurementPPF(filename);
+	//makeAccuracyFile(measurement_PPF);
 
 
 
@@ -1668,8 +1674,12 @@ int main(int argc, char* argv[]) {
 	}
 
 
-
-
+	init_genrand((unsigned)time(NULL));
+	for(int i=0;i<100;i++){
+		float up = genrand_real1();
+		float vp = genrand_real1();
+		cout << up << "\t" << vp << endl;
+	}
 
 
 
