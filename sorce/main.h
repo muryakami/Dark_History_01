@@ -51,6 +51,7 @@
 #include "MakeModelPPF.hpp"
 #include "MakeMeasurementPPF.hpp"
 #include "JacobiAnother.hpp"
+#include "JacobiAnother2.hpp"
 #include "Projection.hpp"
 #include "MakeAccuracyFile.hpp"
 

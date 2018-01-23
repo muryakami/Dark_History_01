@@ -360,6 +360,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\yuki\Documents\Project_07\sorce\VoxelGrid.hpp" />
     <ClInclude Include="sorce\CalRotationMatrix.hpp" />
     <ClInclude Include="sorce\JacobiAnother.hpp" />
+    <ClInclude Include="sorce\JacobiAnother2.hpp" />
     <ClInclude Include="sorce\MakeAccuracyFile.hpp" />
     <ClInclude Include="sorce\MakeMeasurementPPF.hpp" />
     <ClInclude Include="sorce\Projection.hpp" />

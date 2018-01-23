@@ -145,6 +145,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sorce\MakeAccuracyFile.hpp" />
+    <ClInclude Include="sorce\JacobiAnother2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\yuki\Documents\Project_07\CMakeLists.txt" />
