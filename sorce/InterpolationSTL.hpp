@@ -49,7 +49,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle3(TRIANGLE tri) {
 	pcl::PointXYZ cross = cross_product3_cal(eu, ev);
 	float cross_norm = sqrt(dot_product3_cal(cross, cross)); //ïΩçsélï”å`ÇÃñ êœ
 
-	float numPoint = cross_norm * 100;
+	float numPoint = cross_norm * 2;
 	int countPoint = 0;
 	init_genrand((unsigned)time(NULL));
 	while (true) {
@@ -61,10 +61,12 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle3(TRIANGLE tri) {
 		p.x = A.x + up*eu.x + vp*ev.x;
 		p.y = A.y + up*eu.y + vp*ev.y;
 		p.z = A.z + up*eu.z + vp*ev.z;
+
+		countPoint++;
 		//if (p.z < 100) continue; //
 		//if (p.z > 67) continue; //
+		//if (p.z < 116) continue; //
 		cloud_ptr->push_back(p);
-		countPoint++;
 	}
 
 	return cloud_ptr;

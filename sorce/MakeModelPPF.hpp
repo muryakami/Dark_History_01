@@ -82,10 +82,13 @@ void makeModelPPF() {
 			pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in = interpolation_stl2(filename.string());
 
 			// 点群の格子化（ダウンサンプリング）
-			pcl::VoxelGrid<pcl::PointXYZ> sor;
+			/*pcl::VoxelGrid<pcl::PointXYZ> sor;
 			sor.setInputCloud(cloud_in);
 			sor.setLeafSize(0.5f, 0.5f, 0.5f);
-			sor.filter(*cloud_lattice);
+			sor.filter(*cloud_lattice);*/
+
+			// ダウンサンプリングしない
+			pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice = cloud_in;
 
 			// 法線の生成
 			pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals = surface_normals(cloud_lattice);
@@ -222,6 +225,7 @@ void makeModelPPF(const string targetPath) {
 	viewer->setBackgroundColor(0, 0, 0);
 	viewer->addCoordinateSystem(1.0);
 	viewer->initCameraParameters();
+	viewer->setSize(800, 600);
 
 	// 入力点群の表示
 	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(cloud_lattice, 255, 255, 255);

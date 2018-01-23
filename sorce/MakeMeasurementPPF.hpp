@@ -53,7 +53,8 @@ vector<myPPF> makeMeasurementPPF(const string targetPath) {
 	sor.filter(*cloud_lattice);
 
 	// 外れ値の除去
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2 = Remove_outliers(cloud_lattice, false); // 点群データのとき
+	//pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2 = Remove_outliers(cloud_lattice, false); // 点群データのとき
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2 = cloud_lattice;
 
 	/*
 	// 法線の生成
@@ -134,7 +135,8 @@ void makeMeasurementPPF2(const string targetPath) {
 	sor.filter(*cloud_lattice);
 
 	// 外れ値の除去
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2 = Remove_outliers(cloud_lattice, false); // 点群データのとき
+	//pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2 = Remove_outliers(cloud_lattice, false); // 点群データのとき
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice2 = cloud_lattice;
 
 	/*
 	// 法線の生成

@@ -1470,13 +1470,16 @@ int main(int argc, char* argv[]) {
 	//makeModelPPF();
 
 	//const string filename = "..\\DataBase\\Point cloud files\\Turning tool in tool holder\\point_cloud_External_Turning_Tool_Moved.txt";
+	//const string filename = "..\\DataBase\\Point cloud files\\Turning tool in tool holder\\point_cloud_External_Turning_Tool_Clean.txt";
 	//makeMeasurementPPF2(filename);
 
 	//const string filename = ".\\STL files\\NikonTurningTool.STL";
 	//const string filename = "..\\DataBase\\Tool\\STL files\\NikonTurningTool.STL";
+	const string filename = "..\\DataBase\\Tool\\STL files\\CuttingTool_Alternative9.STL";
 	//const string filename = "..\\DataBase\\Tool\\2020\\BRS2000S25.STL";
 	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\óßï˚ëÃ.STL";
-	const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\éOäpêç.STL";
+	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\éOäpêç.STL";
+	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Object\\ex1_whitesprayed2mod.stl";
 	makeModelPPF(filename);
 
 

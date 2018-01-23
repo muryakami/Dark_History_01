@@ -772,7 +772,7 @@ pcl::PointCloud<pcl::PointNormal>::Ptr myFeaturePointExtractionRe2(pcl::PointClo
 
 	// 曲率領域に独自性指標の値を代入　←　代入じゃなくて掛け合わせることで重みにする
 	for (int i = 0; i < highCurvaturePoints->size(); i++) {
-		highCurvaturePoints->at(i).curvature = Sn[i] * harrisPoints->at(i).intensity;
+		highCurvaturePoints->at(i).curvature = harrisPoints->at(i).intensity * (Sn[i] * Sn[i]);
 		rpc << "Harris: " << harrisPoints->at(i).intensity << endl;
 		rpc << "独自性: " << Sn[i] << endl;
 		rpc << "2つの積: " << highCurvaturePoints->at(i).curvature << endl;
@@ -785,7 +785,7 @@ pcl::PointCloud<pcl::PointNormal>::Ptr myFeaturePointExtractionRe2(pcl::PointClo
 	// 独自性指標が高い点の抽出
 	pcl::PointCloud<pcl::PointNormal>::Ptr stl_cloud(new pcl::PointCloud<pcl::PointNormal>());
 	for (pcl::PointCloud<pcl::PointNormal>::iterator it = highCurvaturePoints->begin(); it != highCurvaturePoints->end(); it++) {
-		if (it->curvature < 1e-4) continue; //1e-4 0.85 0.9 1e-12 0.001f
+		if (it->curvature < 0.001f) continue; //1e-4 0.85 0.9 1e-12 0.001f
 		stl_cloud->push_back(*it);
 	}
 
