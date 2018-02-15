@@ -744,7 +744,7 @@ pcl::PointCloud<pcl::PointNormal>::Ptr myFeaturePointExtractionRe2(pcl::PointClo
 		rpc << it.x << "\t" << it.y << "\t" << it.z << "\t" << it.normal_x << "\t" << it.normal_y << "\t" << it.normal_z << endl;
 	}*/
 
-	return highCurvaturePoints; // Harris点群の確認
+	//return highCurvaturePoints; // Harris点群の確認
 
 
 	// 極形式ヒストグラムの算出
