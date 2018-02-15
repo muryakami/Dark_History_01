@@ -99,6 +99,47 @@ pcl::PointCloud<DescriptorType>::Ptr procedure2(string filename, boolean TFC, bo
 	// 法線の生成
 	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals = surface_normals(cloud_lattice);
 
+	
+	/*
+	// Harrisとか提案手法とかオクルージョンありで
+	// オクルージョンの作成
+	pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f); // 視点
+	//pcl::PointXYZ view_point(20.0f, 20.0f, -20.0f); // 視点
+	pcl::PointCloud<pcl::PointNormal>::Ptr occlusion_cloud_normals = make_occlusion(cloud_normals, view_point, false);
+	pcl::PointCloud<pcl::PointXYZ>::Ptr occlusion_cloud(new pcl::PointCloud<pcl::PointXYZ>());
+	occlusion_cloud->points.resize(occlusion_cloud_normals->points.size());
+	pcl::copyPointCloud(*occlusion_cloud_normals, *occlusion_cloud);
+	*/
+	// Harris特徴点検出
+	//pcl::PointCloud<pcl::PointXYZINormal>::Ptr keypointsXYZINormal = myFeaturePointExtraction_HarrisN4(occlusion_cloud);
+	// Harris特徴点の中で独自性の高いものを抽出
+	//*attention_point = *myFeaturePointExtractionRe2(keypointsXYZINormal, occlusion_cloud_normals);
+	
+	
+	// Harrisとか提案手法とか
+	// Harris特徴点検出
+	pcl::PointCloud<pcl::PointXYZINormal>::Ptr keypointsXYZINormal = myFeaturePointExtraction_HarrisN4(cloud_lattice);
+	// Harris特徴点の中で独自性の高いものを抽出
+	*attention_point = *myFeaturePointExtractionRe2(keypointsXYZINormal, cloud_normals);
+
+	
+	/*
+	// シャッフル
+	std::random_device seed_gen;
+	std::mt19937 engine(seed_gen());
+	std::shuffle(cloud_normals->begin(), cloud_normals->end(), engine);
+	int numThreshold = 20; //15 20
+	int count = 0;
+	for (pcl::PointCloud<pcl::PointNormal>::iterator it = cloud_normals->begin(); it != cloud_normals->end(); it++) {
+		if (count >= numThreshold) break; //
+		attention_point->push_back(*it);
+		count++;
+	}
+	*/
+
+
+	/*
+	元々のやつ Harris
 	// 特徴点検出
 	start = std::chrono::system_clock::now(); // 計測開始時間
 	pcl::PointCloud<pcl::PointXYZ>::Ptr keypointsXYZ = myFeaturePointExtraction_HarrisN3(cloud_lattice);
@@ -109,6 +150,9 @@ pcl::PointCloud<DescriptorType>::Ptr procedure2(string filename, boolean TFC, bo
 
 	// 特徴点の法線生成
 	*attention_point = *myKeypoint_normals(cloud_lattice, keypointsXYZ);
+	*/
+
+
 
 	// 処理時間の出力
 	elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); //処理に要した時間をミリ秒に変換
@@ -116,6 +160,7 @@ pcl::PointCloud<DescriptorType>::Ptr procedure2(string filename, boolean TFC, bo
 	processing_time << endl;
 
 	// デバッグのための出力
+	/*
 	//processing_time << "cloud_lattice->size(): " << cloud_lattice->size() << endl;
 	//processing_time << "cloud_normals->size(): " << cloud_normals->size() << endl;
 	processing_time << "keypointsXYZ->size(): " << keypointsXYZ->size() << endl;
@@ -140,7 +185,7 @@ pcl::PointCloud<DescriptorType>::Ptr procedure2(string filename, boolean TFC, bo
 	}
 	keypointsNormal_IO << endl;
 	keypointsNormal_IO << endl;
-	
+	*/
 
 	// 特徴量の記述
 	//return myFeatureDescription_3(cloud_normals, keypointsXYZ);
@@ -228,6 +273,7 @@ void simulation20171113() {
 		//processing_time << "x: " << target_keypointsNormal->at(it.index_query).x << "\ty: " << target_keypointsNormal->at(it.index_query).y << "\tz: " << target_keypointsNormal->at(it.index_query).z << endl;
 		//processing_time << "x: " << source_keypointsNormal->at(it.index_match).x << "\ty: " << source_keypointsNormal->at(it.index_match).y << "\tz: " << source_keypointsNormal->at(it.index_match).z << endl;
 	}
+
 
 
 	// 誤対応除去
@@ -419,6 +465,14 @@ void simulation20171113() {
 	pcl::CorrespondencesPtr pCorrespondences3 = nearest_search_test5(source_keypointsNormal, target_keypointsNormal, pCorrespondences);
 
 
+
+	cout << "correspondences->size(): " << correspondences->size() << endl;
+	cout << "correspondences2->size(): " << correspondences2->size() << endl;
+	cout << "pCorrespondences->size(): " << pCorrespondences->size() << endl;
+	cout << "pCorrespondences2->size(): " << pCorrespondences2->size() << endl;
+	cout << "pCorrespondences3->size(): " << pCorrespondences3->size() << endl;
+
+
 	/*DIR *dir;
 	struct dirent *dp;
 	char path[64] = "..\\DataBase\\STL files\\";
@@ -442,6 +496,7 @@ void simulation20171113() {
 		if (!fs::is_directory(e))
 			std::cout << e.path().filename() << std::endl;*/
 
+	/*
 	vector<string> datafiles;
 
 	const fs::path path("..\\DataBase");
@@ -451,7 +506,7 @@ void simulation20171113() {
 		if (!fs::is_directory(p))
 			std::cout << p << std::endl;
 	}
-
+	*/
 	
 
 	/*Eigen::Matrix4d transformation5;

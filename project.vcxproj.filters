@@ -144,8 +144,13 @@
     <ClInclude Include="sorce\Projection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sorce\MakeAccuracyFile.hpp" />
     <ClInclude Include="sorce\JacobiAnother2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\MakeAccuracyFile.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sorce\Simulation20180207.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

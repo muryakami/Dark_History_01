@@ -13,7 +13,7 @@
 * @param[in] iter_max Å‘å”½•œ‰ñ”
 * @return ”½•œ‰ñ”
 */
-int eigenJacobiMethod(float *a, float *v, int n, float eps = 1e-8, int iter_max = 100)
+int eigenJacobiMethod(float *a, float *v, int n, float eps = 1e-8, int iter_max = 100) //int iter_max = 100
 {
 	float *bim, *bjm;
 	float bii, bij, bjj, bji;
@@ -130,13 +130,13 @@ void RunEigenJacobiMethod(void) {
 	//A[1][0] = Sxy;	A[1][1] = Syy;	A[1][2] = Syz;
 	//A[2][0] = Sxz;	A[2][1] = Syz;	A[2][2] = Szz;
 
-	//A[0][0] = 1.0f;	A[0][1] = 1.0f;	A[0][2] = 0.0f;
-	//A[1][0] = 1.0f;	A[1][1] = 2.0f;	A[1][2] = 1.0f;
-	//A[2][0] = 2.0f;	A[2][1] = 5.0f;	A[2][2] = 3.0f;
+	A[0][0] = 1.0f;	A[0][1] = 1.0f;	A[0][2] = 0.0f;
+	A[1][0] = 1.0f;	A[1][1] = 2.0f;	A[1][2] = 1.0f;
+	A[2][0] = 2.0f;	A[2][1] = 5.0f;	A[2][2] = 3.0f;
 
-	A[0][0] = 1.0f;	A[0][1] = 1.0f;	A[0][2] = 2.0f;
-	A[1][0] = 1.0f;	A[1][1] = 2.0f;	A[1][2] = 5.0f;
-	A[2][0] = 0.0f;	A[2][1] = 1.0f;	A[2][2] = 3.0f;
+	//A[0][0] = 1.0f;	A[0][1] = 1.0f;	A[0][2] = 2.0f;
+	//A[1][0] = 1.0f;	A[1][1] = 2.0f;	A[1][2] = 5.0f;
+	//A[2][0] = 0.0f;	A[2][1] = 1.0f;	A[2][2] = 3.0f;
 
 	int result = eigenJacobiMethod(*A, *V, n);
 

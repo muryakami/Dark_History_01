@@ -11,6 +11,98 @@
 #include <pcl/filters/voxel_grid.h>
 #include <math.h>
 
+// 三角形の要素内補間
+pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle_density(TRIANGLE tri, float density) {
+
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
+
+	// 点情報
+	pcl::PointXYZ A;
+	A.x = tri.vertex[0].x;
+	A.y = tri.vertex[0].y;
+	A.z = tri.vertex[0].z;
+	pcl::PointXYZ B;
+	B.x = tri.vertex[1].x;
+	B.y = tri.vertex[1].y;
+	B.z = tri.vertex[1].z;
+	pcl::PointXYZ C;
+	C.x = tri.vertex[2].x;
+	C.y = tri.vertex[2].y;
+	C.z = tri.vertex[2].z;
+
+	// 基底ベクトル
+	pcl::PointXYZ eu;
+	eu.x = B.x - A.x;
+	eu.y = B.y - A.y;
+	eu.z = B.z - A.z;
+	//float eu_norm = sqrt(dot_product3_cal(eu, eu));
+
+	// 基底ベクトル
+	pcl::PointXYZ ev;
+	ev.x = C.x - A.x;
+	ev.y = C.y - A.y;
+	ev.z = C.z - A.z;
+	//float ev_norm = sqrt(dot_product3_cal(ev, ev));
+
+	// 三角形の面積（外積の大きさの1/2）
+	pcl::PointXYZ cross = cross_product3_cal(eu, ev);
+	float cross_norm = sqrt(dot_product3_cal(cross, cross)); //平行四辺形の面積
+
+	float numPoint = cross_norm * density; // cross_norm *2
+	int countPoint = 0;
+	init_genrand((unsigned)time(NULL));
+	while (true) {
+		if (numPoint < countPoint) break;
+		float up = genrand_real1();
+		float vp = genrand_real1();
+		if (1 < up + vp) continue;
+		pcl::PointXYZ p;
+		p.x = A.x + up*eu.x + vp*ev.x;
+		p.y = A.y + up*eu.y + vp*ev.y;
+		p.z = A.z + up*eu.z + vp*ev.z;
+
+		countPoint++;
+		//if (p.z < 100) continue; //
+		//if (p.z > 67) continue; //
+		//if (p.z < 111) continue; // ホルダ端面見える
+		//if (p.z < 112) continue;
+		cloud_ptr->push_back(p);
+	}
+
+	return cloud_ptr;
+}
+
+
+// STLデータの内挿補間
+pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_stl_density(string filename, float density) {
+
+	// 点群情報
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
+
+	// データ読み込み
+	STLDATA stl_object(filename);
+
+	// 内挿補間
+	pcl::PointCloud<pcl::PointXYZ> merged_cloud;
+	pcl::PointCloud<pcl::PointXYZ>::Ptr triangle_cloud(new pcl::PointCloud<pcl::PointXYZ>);
+	merged_cloud = *triangle_cloud;
+	for (int i = 0; i<stl_object.getDatanum(); i++) {
+		TRIANGLE tri;
+		stl_object.getData(i, &tri);
+		merged_cloud += *interpolation_triangle_density(tri, density);
+	}
+
+	return merged_cloud.makeShared();
+
+	// ダウンサンプリング
+	pcl::VoxelGrid<pcl::PointXYZ> sor;
+	sor.setInputCloud(merged_cloud.makeShared());
+	sor.setLeafSize(0.5f, 0.5f, 0.5f);
+	sor.filter(*cloud_ptr);
+
+	return cloud_ptr;
+}
+
 
 // 三角形の要素内補間
 pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle3(TRIANGLE tri) {
@@ -49,7 +141,7 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle3(TRIANGLE tri) {
 	pcl::PointXYZ cross = cross_product3_cal(eu, ev);
 	float cross_norm = sqrt(dot_product3_cal(cross, cross)); //平行四辺形の面積
 
-	float numPoint = cross_norm * 2;
+	float numPoint = cross_norm * 0.2f; // cross_norm *2
 	int countPoint = 0;
 	init_genrand((unsigned)time(NULL));
 	while (true) {
@@ -65,13 +157,13 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle3(TRIANGLE tri) {
 		countPoint++;
 		//if (p.z < 100) continue; //
 		//if (p.z > 67) continue; //
-		//if (p.z < 116) continue; //
+		//if (p.z < 111) continue; // ホルダ端面見える
+		//if (p.z < 112) continue; // ホルダ端面見えない
 		cloud_ptr->push_back(p);
 	}
 
 	return cloud_ptr;
 }
-
 
 // 三角形の要素内補間
 pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_triangle2(TRIANGLE tri) {
@@ -140,6 +232,8 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr interpolation_stl2(string filename) {
 		//merged_cloud += *interpolation_triangle2(tri);
 		merged_cloud += *interpolation_triangle3(tri);
 	}
+
+	return merged_cloud.makeShared();
 
 	// ダウンサンプリング
 	pcl::VoxelGrid<pcl::PointXYZ> sor;

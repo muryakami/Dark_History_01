@@ -1466,6 +1466,9 @@ int main(int argc, char* argv[]) {
 	//simulation20171030();
 	//simulation20171113();
 	//simulation20171127();
+	//simulation20180207();
+	//simulation20180209_1();
+	simulation20180209_3();
 
 	//makeModelPPF();
 
@@ -1478,14 +1481,22 @@ int main(int argc, char* argv[]) {
 	//const string filename = "..\\DataBase\\Tool\\STL files\\CuttingTool_Alternative9.STL";
 	//const string filename = "..\\DataBase\\Tool\\2020\\BRS2000S25.STL";
 	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\óßï˚ëÃ.STL";
+	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\â~íå.STL";
 	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\éOäpêç.STL";
+	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\â~êç.STL";
+	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Geometry\\ãÖ.STL";
 	//const string filename = "C:\\Users\\yuki\\Documents\\DataBase\\Object\\ex1_whitesprayed2mod.stl";
 	//makeModelPPF(filename);
+
+	//vector<myPPF> measurement_PPF = makeModelPPF_Return(filename);
+	//makeAccuracyFile(measurement_PPF);
 
 
 	//const string filename = "..\\DataBase\\Point cloud files\\Turning tool in tool holder\\point_cloud_External_Turning_Tool_Moved.txt";
 	//vector<myPPF> measurement_PPF = makeMeasurementPPF(filename);
 	//makeAccuracyFile(measurement_PPF);
+
+
 
 
 

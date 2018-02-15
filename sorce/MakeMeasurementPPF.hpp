@@ -176,6 +176,11 @@ void makeMeasurementPPF2(const string targetPath) {
 	viewer->setBackgroundColor(0, 0, 0);
 	viewer->addCoordinateSystem(1.0);
 	viewer->initCameraParameters();
+	viewer->setSize(800, 600);
+
+	Eigen::Vector4f xyz_centroid;
+	pcl::compute3DCentroid(*cloud_lattice2, xyz_centroid);//重心を計算
+	viewer->setCameraPosition(-200, 150, 200, xyz_centroid[0], xyz_centroid[1], xyz_centroid[2], 0, 0, 0);
 
 	// 入力点群の表示
 	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(cloud_lattice2, 255, 255, 255);

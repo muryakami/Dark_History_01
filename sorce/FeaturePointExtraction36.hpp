@@ -744,7 +744,7 @@ pcl::PointCloud<pcl::PointNormal>::Ptr myFeaturePointExtractionRe2(pcl::PointClo
 		rpc << it.x << "\t" << it.y << "\t" << it.z << "\t" << it.normal_x << "\t" << it.normal_y << "\t" << it.normal_z << endl;
 	}*/
 
-	//return highCurvaturePoints; // Harris点群の確認
+	return highCurvaturePoints; // Harris点群の確認
 
 
 	// 極形式ヒストグラムの算出
@@ -768,6 +768,12 @@ pcl::PointCloud<pcl::PointNormal>::Ptr myFeaturePointExtractionRe2(pcl::PointClo
 	// 曲率領域に独自性指標の値を代入
 	/*for (int i = 0; i < highCurvaturePoints->size(); i++) {
 	highCurvaturePoints->at(i).curvature = Sn[i];
+	}
+	// 独自性指標が高い点の抽出
+	pcl::PointCloud<pcl::PointNormal>::Ptr stl_cloud(new pcl::PointCloud<pcl::PointNormal>());
+	for (pcl::PointCloud<pcl::PointNormal>::iterator it = highCurvaturePoints->begin(); it != highCurvaturePoints->end(); it++) {
+		if (it->curvature < 0.85) continue; //1e-4 0.85 0.9 1e-12 0.001f
+		stl_cloud->push_back(*it);
 	}*/
 
 	// 曲率領域に独自性指標の値を代入　←　代入じゃなくて掛け合わせることで重みにする
@@ -778,10 +784,7 @@ pcl::PointCloud<pcl::PointNormal>::Ptr myFeaturePointExtractionRe2(pcl::PointClo
 		rpc << "2つの積: " << highCurvaturePoints->at(i).curvature << endl;
 		rpc << endl;
 	}
-
-
 	// 独自性指標の値で決定
-
 	// 独自性指標が高い点の抽出
 	pcl::PointCloud<pcl::PointNormal>::Ptr stl_cloud(new pcl::PointCloud<pcl::PointNormal>());
 	for (pcl::PointCloud<pcl::PointNormal>::iterator it = highCurvaturePoints->begin(); it != highCurvaturePoints->end(); it++) {

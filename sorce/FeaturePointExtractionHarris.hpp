@@ -6,6 +6,9 @@
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 #include <pcl/keypoints/harris_3d.h>
+#include <pcl/keypoints/susan.h>
+#include <pcl/keypoints/iss_3d.h>
+
 
 using namespace std;
 
@@ -282,7 +285,7 @@ pcl::PointCloud<pcl::PointXYZINormal>::Ptr myFeaturePointExtraction_HarrisN4(pcl
 	//float threshold = 0.005f; // 0.005f(旋削工具) 1e-6(回転工具)
 	//float threshold = 1e-72; // 意味ないかも
 
-	// 特徴点検出
+	// 特徴点検出(Harris)
 	std::cout << "detection" << std::endl;
 	pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::Ptr detector(new pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>());
 	detector->setNonMaxSupression(true);
@@ -291,8 +294,31 @@ pcl::PointCloud<pcl::PointXYZINormal>::Ptr myFeaturePointExtraction_HarrisN4(pcl
 	detector->setRadiusSearch(radius); // 最近傍の決定に使用
 	detector->setThreshold(threshold);
 	//detector->setMethod(pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::TOMASI); // HARRIS, NOBLE, LOWE, TOMASI, CURVATURE
-	detector->setMethod(pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::HARRIS); // HARRIS, NOBLE, LOWE, TOMASI, CURVATURE
-	//detector->setMethod(pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::CURVATURE); // HARRIS, NOBLE, LOWE, TOMASI, CURVATURE
+	//detector->setMethod(pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::HARRIS); // HARRIS, NOBLE, LOWE, TOMASI, CURVATURE
+	detector->setMethod(pcl::HarrisKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::CURVATURE); // HARRIS, NOBLE, LOWE, TOMASI, CURVATURE
+	
+
+	// 特徴点検出(SUSAN) Compute keypoints
+	/*pcl::SUSANKeypoint<pcl::PointXYZ, pcl::PointXYZI>::Ptr detector(new pcl::SUSANKeypoint<pcl::PointXYZ, pcl::PointXYZI>());
+	detector->setNonMaxSupression(true);
+	detector->setRadius(radius);
+	detector->setDistanceThreshold(0.01f);	// 0.001f
+	detector->setAngularThreshold(0.01f);	// 0.0001f
+	detector->setIntensityThreshold(1.0f);	// 7.0f 1.5f 1.0f
+	//pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>());
+	//detector->setSearchMethod(tree);*/
+
+	// 特徴点検出(ISS)
+	/*pcl::ISSKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>::Ptr detector(new pcl::ISSKeypoint3D<pcl::PointXYZ, pcl::PointXYZI>());
+	detector->setSalientRadius(5.0f);
+	detector->setNonMaxRadius(3.0f);
+	detector->setThreshold21(0.975f);	// 0.975f 0.5f
+	detector->setThreshold32(0.975f);	// 0.975f 0.5f
+	detector->setMinNeighbors(5);		// 5 20
+	//pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>());
+	//detector->setSearchMethod(tree);*/
+
+
 
 	detector->setInputCloud(cloud);
 	//detector->setSearchSurface(cloud); // 法線推定にダウンサンプリング前の点群を使用できる
@@ -309,7 +335,6 @@ pcl::PointCloud<pcl::PointXYZINormal>::Ptr myFeaturePointExtraction_HarrisN4(pcl
 	*attention_point = *myKeypoint_normals2(cloud, keypoints);
 
 	return attention_point;
-
 }
 
 #endif // _Harris_HPP_

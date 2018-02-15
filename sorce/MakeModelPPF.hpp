@@ -171,6 +171,22 @@ void makeModelPPF(const string targetPath) {
 	// Harris特徴点の中で独自性の高いものを抽出
 	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myFeaturePointExtractionRe2(keypointsXYZINormal, cloud_normals);
 	
+
+	/*
+	// シャッフル（ランダム法）
+	std::random_device seed_gen;
+	std::mt19937 engine(seed_gen());
+	std::shuffle(cloud_normals->begin(), cloud_normals->end(), engine);
+	int numThreshold = 20; //15 20
+	int count = 0;
+	for (pcl::PointCloud<pcl::PointNormal>::iterator it = cloud_normals->begin(); it != cloud_normals->end(); it++) {
+		if (count >= numThreshold) break; //
+		attention_point->push_back(*it);
+		count++;
+	}
+	*/
+
+
 	/*
 	// オクルージョンの作成
 	pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f); // 視点
@@ -227,6 +243,10 @@ void makeModelPPF(const string targetPath) {
 	viewer->initCameraParameters();
 	viewer->setSize(800, 600);
 
+	Eigen::Vector4f xyz_centroid;
+	pcl::compute3DCentroid(*cloud_lattice, xyz_centroid);//重心を計算
+	viewer->setCameraPosition(-200, 150, 200, xyz_centroid[0], xyz_centroid[1], xyz_centroid[2], 0, 0, 0);
+
 	// 入力点群の表示
 	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(cloud_lattice, 255, 255, 255);
 	viewer->addPointCloud(cloud_lattice, cloud_color, "cloud_lattice");
@@ -234,8 +254,8 @@ void makeModelPPF(const string targetPath) {
 
 	// 入力点群の表示（オクルージョン）
 	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(occlusion_cloud, 255, 255, 255);
-	//viewer->addPointCloud(occlusion_cloud, cloud_color, "cloud_lattice");
-	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud_lattice");
+	//viewer->addPointCloud(occlusion_cloud, cloud_color, "occlusion_cloud");
+	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "occlusion_cloud");
 
 	// 特徴点の表示
 	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> attention_point_color(attention_point, 0, 255, 0);
@@ -248,6 +268,121 @@ void makeModelPPF(const string targetPath) {
 		boost::this_thread::sleep(boost::posix_time::microseconds(100000));
 	}
 
+}
+
+vector<myPPF> makeModelPPF_Return(const string targetPath) {
+
+	bool TFC = false;
+	bool TFA = false;
+	float maxNoiseC = 3.0f;
+	float maxNoiseA = 3.0f;
+
+	// STLデータの内挿補間
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in = interpolation_stl2(targetPath);
+
+	// 点群へのノイズ付与(trueで付与)
+	if (TFC) addingNoise2(cloud_in, maxNoiseC);
+
+	// 点群の格子化（ダウンサンプリング）
+	/*pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice(new pcl::PointCloud<pcl::PointXYZ>);
+	pcl::VoxelGrid<pcl::PointXYZ> sor;
+	sor.setInputCloud(cloud_in);
+	sor.setLeafSize(0.5f, 0.5f, 0.5f);
+	sor.filter(*cloud_lattice);*/
+
+	// ダウンサンプリングしない
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_lattice = cloud_in;
+
+	// 法線の生成
+	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals = surface_normals(cloud_lattice);
+
+
+	/*
+	// 特徴点検出
+	pcl::PointCloud<pcl::PointXYZ>::Ptr keypointsXYZ = myFeaturePointExtraction_HarrisN3(cloud_lattice);
+
+	// 特徴点へのノイズ付与
+	//if (TFA) addingNoise2(keypointsXYZ, maxNoiseA);
+
+	// 特徴点の法線生成
+	*attention_point = *myKeypoint_normals(cloud_lattice, keypointsXYZ);
+	*/
+
+
+	/*
+	// Harris特徴点検出
+	pcl::PointCloud<pcl::PointXYZINormal>::Ptr keypointsXYZINormal = myFeaturePointExtraction_HarrisN4(cloud_lattice);
+	// Harris特徴点の中で独自性の高いものを抽出
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myFeaturePointExtractionRe2(keypointsXYZINormal, cloud_normals);
+	*/
+
+	/*
+	// シャッフル（ランダム法）
+	std::random_device seed_gen;
+	std::mt19937 engine(seed_gen());
+	std::shuffle(cloud_normals->begin(), cloud_normals->end(), engine);
+	int numThreshold = 20; //15 20
+	int count = 0;
+	for (pcl::PointCloud<pcl::PointNormal>::iterator it = cloud_normals->begin(); it != cloud_normals->end(); it++) {
+		if (count >= numThreshold) break; //
+		attention_point->push_back(*it);
+		count++;
+	}
+	*/
+	
+	// オクルージョンの作成
+	pcl::PointXYZ view_point(0.0f, 0.0f, 0.0f); // 視点
+	//pcl::PointXYZ view_point(20.0f, 20.0f, -20.0f); // 視点
+	pcl::PointCloud<pcl::PointNormal>::Ptr occlusion_cloud_normals = make_occlusion(cloud_normals, view_point, false);
+	pcl::PointCloud<pcl::PointXYZ>::Ptr occlusion_cloud(new pcl::PointCloud<pcl::PointXYZ>());
+	occlusion_cloud->points.resize(occlusion_cloud_normals->points.size());
+	pcl::copyPointCloud(*occlusion_cloud_normals, *occlusion_cloud);
+	// Harris特徴点検出
+	pcl::PointCloud<pcl::PointXYZINormal>::Ptr keypointsXYZINormal = myFeaturePointExtraction_HarrisN4(occlusion_cloud);
+	// Harris特徴点の中で独自性の高いものを抽出
+	pcl::PointCloud<pcl::PointNormal>::Ptr attention_point = myFeaturePointExtractionRe2(keypointsXYZINormal, occlusion_cloud_normals);
+
+
+	// PPFの作成
+	vector<myPPF> model_PPF = make_lightPPFs(attention_point);
+
+
+	cout << "occlusion: " << (float)occlusion_cloud->size() / (float)cloud_lattice->size() *100 << "%" << endl;
+
+
+	// 入力点群と法線を表示
+	boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer("3D Viewer"));
+	viewer->setBackgroundColor(0, 0, 0);
+	viewer->addCoordinateSystem(1.0);
+	viewer->initCameraParameters();
+	viewer->setSize(800, 600);
+
+	Eigen::Vector4f xyz_centroid;
+	pcl::compute3DCentroid(*cloud_lattice, xyz_centroid);//重心を計算
+	viewer->setCameraPosition(-200, 150, 200, xyz_centroid[0], xyz_centroid[1], xyz_centroid[2], 0, 0, 0);
+
+	// 入力点群の表示
+	//pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(cloud_lattice, 255, 255, 255);
+	//viewer->addPointCloud(cloud_lattice, cloud_color, "cloud_lattice");
+	//viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud_lattice");
+
+	// 入力点群の表示（オクルージョン）
+	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color(occlusion_cloud, 255, 255, 255);
+	viewer->addPointCloud(occlusion_cloud, cloud_color, "occlusion_cloud");
+	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "occlusion_cloud");
+
+	// 特徴点の表示
+	pcl::visualization::PointCloudColorHandlerCustom<pcl::PointNormal> attention_point_color(attention_point, 0, 255, 0);
+	viewer->addPointCloud(attention_point, attention_point_color, "attention_point");
+	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 7, "attention_point");
+	viewer->addPointCloudNormals<pcl::PointNormal>(attention_point, 1, 7.0, "attention_pointn");
+
+	while (!viewer->wasStopped()) {
+		viewer->spinOnce(100);
+		boost::this_thread::sleep(boost::posix_time::microseconds(100000));
+	}
+
+	return model_PPF;
 }
 
 #endif // _MakeModelPPF_HPP_
